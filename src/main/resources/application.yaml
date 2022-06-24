@@ -1,0 +1,22 @@
+#端口配置
+server:
+  port: 9090
+#数据库链接配置
+spring:
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://localhost:3306/haos?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  profiles:
+    active: dev
+
+#日志配置
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  #逻辑删除配置
+  global-config:
+    db-config:
+      logic-delete-value: 1
+      logic-not-delete-value: 0
