@@ -17,12 +17,12 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author 杨锋
- * @since 2022-06-23
+ * @since 2022-06-25
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="Hotel对象", description="酒店")
+@ApiModel(value="Hotel对象", description="?Ƶ??")
 public class Hotel implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -34,9 +34,9 @@ public class Hotel implements Serializable {
 
     private Long roomsumId;
 
-    private Long addAddressId;
+    private Long hadAddressId;
 
-    private Long cheCheckId;
+    private Long hchCheckId;
 
     private String hname;
 

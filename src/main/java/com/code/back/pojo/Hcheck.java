@@ -12,40 +12,32 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * ??ַ?
+ * ??ס?
  * </p>
  *
  * @author 杨锋
- * @since 2022-06-23
+ * @since 2022-06-25
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="Address对象", description="地址")
-public class Address implements Serializable {
+@ApiModel(value="Hcheck对象", description="??ס?")
+public class Hcheck implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "address_id", type = IdType.ID_WORKER)
-    private Long addressId;
+    @TableId(value = "check_id", type = IdType.ID_WORKER)
+    private Long checkId;
 
     private Long hotHId;
 
     private Long hId;
 
-    private String city;
+    private String checkIn;
 
-    private String state;
+    private String checkOut;
 
-    private String country;
-
-    private Float longitude;
-
-    private Float latitude;
-
-    private Integer cityNo;
-
-    private Integer countryNo;
+    private Float ratesFrom;
 
 
 }

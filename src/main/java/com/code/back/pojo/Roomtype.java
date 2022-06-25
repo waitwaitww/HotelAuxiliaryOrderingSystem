@@ -16,12 +16,12 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author 杨锋
- * @since 2022-06-23
+ * @since 2022-06-25
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="Roomtype对象", description="酒店房间类型")
+@ApiModel(value="Roomtype对象", description="?????")
 public class Roomtype implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -32,8 +32,6 @@ public class Roomtype implements Serializable {
     private Long hotHId;
 
     private Long hId;
-
-    private Long hotHid;
 
     private String rname;
 

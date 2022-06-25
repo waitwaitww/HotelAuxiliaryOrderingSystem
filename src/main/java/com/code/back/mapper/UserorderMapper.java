@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
  * </p>
  *
  * @author 杨锋
- * @since 2022-06-23
+ * @since 2022-06-25
  */
 @Repository
 public interface UserorderMapper extends BaseMapper<Userorder> {

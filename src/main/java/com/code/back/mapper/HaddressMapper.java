@@ -1,8 +1,7 @@
 package com.code.back.mapper;
 
-import com.code.back.pojo.Address;
+import com.code.back.pojo.Haddress;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -11,9 +10,9 @@ import org.springframework.stereotype.Repository;
  * </p>
  *
  * @author 杨锋
- * @since 2022-06-23
+ * @since 2022-06-25
  */
-@Mapper
-public interface AddressMapper extends BaseMapper<Address> {
+@Repository
+public interface HaddressMapper extends BaseMapper<Haddress> {
 
 }

@@ -16,12 +16,12 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author 杨锋
- * @since 2022-06-23
+ * @since 2022-06-25
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="Roomsum对象", description="酒店余量")
+@ApiModel(value="Roomsum对象", description="????ͳ???")
 public class Roomsum implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -17,12 +17,12 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author 杨锋
- * @since 2022-06-23
+ * @since 2022-06-25
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="User对象", description="用户")
+@ApiModel(value="User对象", description="?û??")
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -38,9 +38,9 @@ public class User implements Serializable {
 
     private Integer age;
 
-    private Boolean sex;
+    private Integer sex;
 
-    private String userDescribe;
+    private String userdescribe;
 
     private Integer shot;
 

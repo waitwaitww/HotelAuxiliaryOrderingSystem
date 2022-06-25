@@ -1,7 +1,6 @@
 package com.code.back.pojo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import java.util.Date;
 import com.baomidou.mybatisplus.annotation.Version;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
@@ -13,32 +12,40 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * ??ס?
+ * ??ַ?
  * </p>
  *
  * @author 杨锋
- * @since 2022-06-23
+ * @since 2022-06-25
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="HCheck对象", description="酒店签到签退时间")
-public class HCheck implements Serializable {
+@ApiModel(value="Haddress对象", description="??ַ?")
+public class Haddress implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "check_id", type = IdType.ID_WORKER)
-    private Long checkId;
+    @TableId(value = "address_id", type = IdType.ID_WORKER)
+    private Long addressId;
 
     private Long hotHId;
 
     private Long hId;
 
-    private Date checkIn;
+    private String city;
 
-    private Date checkOut;
+    private String state;
 
-    private Float ratesFrom;
+    private String country;
+
+    private Float longitude;
+
+    private Float latitude;
+
+    private Integer cityNo;
+
+    private Integer countryNo;
 
 
 }

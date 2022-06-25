@@ -5,6 +5,7 @@ import java.util.Date;
 import com.baomidou.mybatisplus.annotation.Version;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
@@ -19,12 +20,12 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author 杨锋
- * @since 2022-06-23
+ * @since 2022-06-25
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="Userorder对象", description="用户订单")
+@ApiModel(value="Userorder对象", description="")
 public class Userorder implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -36,7 +37,7 @@ public class Userorder implements Serializable {
 
     private Long rId;
 
-    @TableField(fill = FieldFill.INSERT)
+    @TableField(value = "Create_time", fill = FieldFill.INSERT)
     private Date createTime;
 
     private Date checkinTime;
@@ -60,6 +61,9 @@ public class Userorder implements Serializable {
     private Long p2Tel;
 
     private String pname2;
+
+    @TableLogic
+    private Integer deleted;
 
 
 }

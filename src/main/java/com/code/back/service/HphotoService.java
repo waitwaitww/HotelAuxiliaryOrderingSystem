@@ -1,6 +1,6 @@
 package com.code.back.service;
 
-import com.code.back.pojo.Photo;
+import com.code.back.pojo.Hphoto;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author 杨锋
- * @since 2022-06-23
+ * @since 2022-06-25
  */
-public interface PhotoService extends IService<Photo> {
+public interface HphotoService extends IService<Hphoto> {
 
 }

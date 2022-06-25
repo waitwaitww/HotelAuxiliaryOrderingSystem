@@ -1,6 +1,7 @@
 package com.code.back.controller;
 
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -11,11 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
  * </p>
  *
  * @author 杨锋
- * @since 2022-06-23
+ * @since 2022-06-25
  */
-@RestController
-@RequestMapping("/back/photo")
-public class PhotoController {
+@Controller
+@RequestMapping("/back/hphoto")
+public class HphotoController {
 
 }
 

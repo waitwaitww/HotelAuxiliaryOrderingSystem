@@ -1,6 +1,6 @@
 package com.code.back.service;
 
-import com.code.back.pojo.HCheck;
+import com.code.back.pojo.Hcheck;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author 杨锋
- * @since 2022-06-23
+ * @since 2022-06-25
  */
-public interface HCheckService extends IService<HCheck> {
+public interface HcheckService extends IService<Hcheck> {
 
 }

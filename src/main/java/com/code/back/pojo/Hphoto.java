@@ -16,13 +16,13 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author 杨锋
- * @since 2022-06-23
+ * @since 2022-06-25
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="Photo对象", description="酒店图片")
-public class Photo implements Serializable {
+@ApiModel(value="Hphoto对象", description="ͼƬ?")
+public class Hphoto implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

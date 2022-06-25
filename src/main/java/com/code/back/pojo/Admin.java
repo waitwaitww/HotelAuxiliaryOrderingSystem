@@ -16,12 +16,12 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author 杨锋
- * @since 2022-06-23
+ * @since 2022-06-25
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="Admin对象", description="管理员")
+@ApiModel(value="Admin对象", description="????Ա?")
 public class Admin implements Serializable {
 
     private static final long serialVersionUID = 1L;

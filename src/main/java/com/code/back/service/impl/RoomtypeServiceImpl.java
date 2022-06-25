@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author 杨锋
- * @since 2022-06-23
+ * @since 2022-06-25
  */
 @Service
 public class RoomtypeServiceImpl extends ServiceImpl<RoomtypeMapper, Roomtype> implements RoomtypeService {

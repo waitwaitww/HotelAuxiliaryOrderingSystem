@@ -1,6 +1,6 @@
 package com.code.back.mapper;
 
-import com.code.back.pojo.Photo;
+import com.code.back.pojo.Hphoto;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.springframework.stereotype.Repository;
 
@@ -10,9 +10,9 @@ import org.springframework.stereotype.Repository;
  * </p>
  *
  * @author 杨锋
- * @since 2022-06-23
+ * @since 2022-06-25
  */
 @Repository
-public interface PhotoMapper extends BaseMapper<Photo> {
+public interface HphotoMapper extends BaseMapper<Hphoto> {
 
 }
