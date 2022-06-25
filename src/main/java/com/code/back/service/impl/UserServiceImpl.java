@@ -33,12 +33,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public String queryPwdById(Integer uid){
+    public String queryPwdById(Long uid){
         return userMapper.queryPasswordByid(uid);
     }
 
     @Override
-    public User queryUserById(Integer uid) {
+    public User queryUserById(Long uid) {
         return userMapper.selectById(uid);
     }
 
@@ -49,7 +49,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public int updataUpassword(Integer uid, String password) {
+    public int updataUpassword(Long uid, String password) {
         return userMapper.updateUpassword(uid,password);
     }
 }

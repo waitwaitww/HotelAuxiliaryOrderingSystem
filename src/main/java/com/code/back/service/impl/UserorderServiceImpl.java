@@ -36,44 +36,52 @@ public class UserorderServiceImpl extends ServiceImpl<UserorderMapper, Userorder
 
 
     @Override
-    public List<Userorder> queryAllUserorderByUId(Integer uid) {
+    public List<Userorder> queryAllUserorderByUId(Long uid) {
         QueryWrapper<Userorder> wrapper = new QueryWrapper<>();
         wrapper.eq("u_id",uid);
         return userorderMapper.selectList(wrapper);
     }
 
     @Override
-    public List<Userorder> queryAll0OrderById(Integer uid) {
+    public List<Userorder> queryAll0OrderById(Long uid) {
+        QueryWrapper<Userorder> wrapper = new QueryWrapper<>();
+        wrapper.eq("state",0);
+        return userorderMapper.selectList(wrapper);
+    }
+
+    @Override
+    public List<Userorder> queryAll1OrderById(Long uid) {
+        QueryWrapper<Userorder> wrapper = new QueryWrapper<>();
+        wrapper.eq("state",1);
+        return userorderMapper.selectList(wrapper);
+    }
+
+    @Override
+    public List<Userorder> queryAll2OrderById(Long uid) {
+        QueryWrapper<Userorder> wrapper = new QueryWrapper<>();
+        wrapper.eq("state",2);
+        return userorderMapper.selectList(wrapper);
+    }
+
+    @Override
+    public List<Userorder> queryAll3OrderById(Long uid) {
+        QueryWrapper<Userorder> wrapper = new QueryWrapper<>();
+        wrapper.eq("state",3);
+        return userorderMapper.selectList(wrapper);
+    }
+
+    @Override
+    public Userorder queryUserorderById(Long oid) {
         return null;
     }
 
     @Override
-    public List<Userorder> queryAll1OrderById(Integer uid) {
-        return null;
-    }
-
-    @Override
-    public List<Userorder> queryAll2OrderById(Integer uid) {
-        return null;
-    }
-
-    @Override
-    public List<Userorder> queryAll3OrderById(Integer uid) {
-        return null;
-    }
-
-    @Override
-    public Userorder queryUserorderById(Integer oid) {
-        return null;
-    }
-
-    @Override
-    public int updateUserorderProgress(Integer oid) {
+    public int updateUserorderProgress(Long oid) {
         return 0;
     }
 
     @Override
-    public int deleteUserorderById(Integer oid) {
+    public int deleteUserorderById(Long oid) {
         return 0;
     }
 }

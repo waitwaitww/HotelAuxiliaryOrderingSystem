@@ -18,10 +18,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserMapper extends BaseMapper<User> {
     @Select("select upassword from haos.user where u_id = ${u_id}")
-    public String  queryPasswordByid(@Param("u_id") Integer uId);
+    public String  queryPasswordByid(@Param("u_id") Long uId);
 
     //更新用户密码
     @Update("update haos.user set upassword=${upassword} where u_id=${u_id}")
-    public int updateUpassword(@Param("u_id")Integer uid,@Param("upassword")String password);
+    public int updateUpassword(@Param("u_id")Long uid,@Param("upassword")String password);
 
 }

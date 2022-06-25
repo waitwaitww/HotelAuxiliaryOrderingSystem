@@ -14,14 +14,14 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface UserService extends IService<User> {
 
     //根据id查找用户密码
-    String queryPwdById(Integer uid);
+    String queryPwdById(Long uid);
 
     //根据id查找用户
-    User queryUserById(Integer uid);
+    User queryUserById(Long uid);
 
     //更新用户
     int updataUser(User user);
 
     //更新用户密码
-    int updataUpassword(Integer uid, String password);
+    int updataUpassword(Long uid, String password);
 }

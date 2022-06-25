@@ -31,7 +31,7 @@ public class UserController {
         return "index";
     }
     @RequestMapping("/t1")
-    public String verifyIdentity(int uid, String password, Model model){
+    public String verifyIdentity(Long uid, String password, Model model){
         String pwd = userService.queryPwdById(uid);
         if(pwd.equals(password)){
             return "success";
