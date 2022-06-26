@@ -16,6 +16,9 @@ public interface UserService extends IService<User> {
     //根据id查找用户密码
     String queryPwdById(Long uid);
 
+    //根据邮箱查找用户密码
+    String queryPwdByEmail(String email);
+
     //根据id查找用户
     User queryUserById(Long uid);
 

@@ -1,9 +1,11 @@
 package com.code.back.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.code.back.pojo.Admin;
 import com.code.back.mapper.AdminMapper;
 import com.code.back.service.AdminService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,4 +19,18 @@ import org.springframework.stereotype.Service;
 @Service
 public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements AdminService {
 
+    @Autowired
+    private AdminMapper adminMapper;
+
+    @Override
+    public String queryAPwdByAid(Long aid) {
+        return adminMapper.selectById(aid).getPassword();
+    }
+
+    @Override
+    public String queryAPwdByAname(String aname) {
+        QueryWrapper<Admin> wrapper = new QueryWrapper<>();
+        wrapper.eq("aname",aname);
+        return adminMapper.selectOne(wrapper).getPassword();
+    }
 }

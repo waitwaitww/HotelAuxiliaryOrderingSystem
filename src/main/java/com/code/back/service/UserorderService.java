@@ -38,4 +38,7 @@ public interface UserorderService extends IService<Userorder> {
 
     //删除订单
     int deleteUserorderById(Long oid);
+
+    //查询某酒店的所有评论
+    List<String> queryAllReviewByHid(Long hid);
 }

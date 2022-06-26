@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -33,7 +34,14 @@ public class UserorderController {
     public String test(Long uid){
         List<Userorder> list = userorderService.queryAllUserorderByUId(uid);
         list.forEach(System.out::println);
-        return "success";
+        return "index";
+    }
+
+
+    @RequestMapping("/t3")
+    public String test1(){
+        userorderService.queryAllReviewByHid(41324L);
+        return "index";
     }
 }
 

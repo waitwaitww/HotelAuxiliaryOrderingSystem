@@ -1,8 +1,10 @@
 package com.code.back.controller;
 
 
+import com.code.back.pojo.Msg;
 import com.code.back.pojo.User;
 import com.code.back.service.UserService;
+import com.code.back.util.jsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * <p>
  * ?û?? 前端控制器
@@ -21,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author 杨锋
  * @since 2022-06-25
  */
-@Controller
+@RestController
 @RequestMapping("/back/user")
 public class UserController {
 
@@ -29,18 +34,40 @@ public class UserController {
     @Qualifier("UserServiceImpl")
     private UserService userService;
 
-    @RequestMapping("/t2")
-    @ResponseBody
-    public String testSpringBoot(@RequestParam("uname")String Uname,@RequestParam("upassword")String Upassword) {
-        System.out.println(Uname);
-        System.out.println(Upassword);
-        return "index";
-    }
+//    @RequestMapping("/t2")
+//    public String testSpringBoot(@RequestParam("uname")String Uname,@RequestParam("upassword")String Upassword) {
+//        System.out.println(Uname);
+//        System.out.println(Upassword);
+//        return "index";
+//    }
 
-    @RequestMapping("/t1")
-    public String verifyIdentity(Long uid, String password, Model model){
+//    @RequestMapping(value = "/loginById",produces = "application/json;charset=utf-8")
+//    public String loginId(@RequestParam("uid")Long uid, @RequestParam("upassword")String password){
+////        String pwdById = userService.queryPwdById(uid);
+//        if(pwdById.equals(password)) {
+//            return jsonUtil.getJson("true");
+//        }
+//        else return jsonUtil.getJson("false");
+//    }
 
-        return "success";
+    @RequestMapping(value = "/t2",produces = "application/json;charset=utf-8")
+    public String loginEmail(@RequestParam("uname")String  email, @RequestParam("upassword")String password){
+//        String pwdById = userService.queryPwdByEmail(email);
+        String pwdById = userService.queryPwdByEmail(email);
+        List<User> users = new ArrayList<>();
+        String msg = "false";
+
+        Msg msg1 = new Msg();
+        msg1.setResult(msg);
+
+        System.out.println("email");
+        if(pwdById.equals(password)) {
+            System.out.println(password);
+            msg1.setResult("success");
+            return jsonUtil.getJson(msg1);
+        }
+
+        else return jsonUtil.getJson(msg1);
     }
 }
 

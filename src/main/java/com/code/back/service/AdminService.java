@@ -13,4 +13,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface AdminService extends IService<Admin> {
 
+    //根据管理员id查找密码
+    String queryAPwdByAid(Long aid);
+
+    //根据管理员name查询密码
+    String queryAPwdByAname(String aname);
 }

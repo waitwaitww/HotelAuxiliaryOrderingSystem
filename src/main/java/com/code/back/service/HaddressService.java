@@ -13,4 +13,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface HaddressService extends IService<Haddress> {
 
+    //查询某酒店地址
+    Haddress queryHaddressByHid(Long hid);
+
 }

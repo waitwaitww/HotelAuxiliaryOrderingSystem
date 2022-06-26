@@ -13,4 +13,12 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ReviewService extends IService<Review> {
 
+    //获取某酒店的review对象
+    Review queryReviewByHid(Long hid);
+
+    //获取某酒店星级
+    float queryRatingByHid(Long hid);
+
+    //获取某酒店评论数
+    int qeuryReviewnum(Long hid);
 }

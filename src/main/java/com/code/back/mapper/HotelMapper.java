@@ -2,7 +2,12 @@ package com.code.back.mapper;
 
 import com.code.back.pojo.Hotel;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import io.swagger.annotations.SwaggerDefinition;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * <p>
@@ -14,5 +19,8 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface HotelMapper extends BaseMapper<Hotel> {
+
+    @Select("select * from haos.hetol where h_id = (select h_id from haos.review where number_of_review > #{number_of_review}")
+    public List<Hotel> queryGtReviewsum(@Param("number_of_review") int reviewsum);
 
 }

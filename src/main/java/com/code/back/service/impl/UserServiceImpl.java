@@ -1,5 +1,6 @@
 package com.code.back.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.code.back.pojo.User;
 import com.code.back.mapper.UserMapper;
 import com.code.back.service.UserService;
@@ -35,6 +36,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public String queryPwdById(Long uid){
         return userMapper.queryPasswordByid(uid);
+    }
+
+    @Override
+    public String queryPwdByEmail(String email) {
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        wrapper.eq("email",email);
+        return userMapper.selectOne(wrapper).getUpassword();
     }
 
     @Override

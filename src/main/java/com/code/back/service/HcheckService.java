@@ -13,4 +13,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface HcheckService extends IService<Hcheck> {
 
+    //查询某酒店签到签退时间
+    Hcheck queryHcheckByHid(Long hid);
+
+    //跟新某酒店签到签退时间
+    int updateHcheck(Hcheck hcheck);
 }

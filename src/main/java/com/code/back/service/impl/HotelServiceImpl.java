@@ -1,10 +1,14 @@
 package com.code.back.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.code.back.pojo.Hotel;
 import com.code.back.mapper.HotelMapper;
 import com.code.back.service.HotelService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -17,4 +21,41 @@ import org.springframework.stereotype.Service;
 @Service
 public class HotelServiceImpl extends ServiceImpl<HotelMapper, Hotel> implements HotelService {
 
+    @Autowired
+    private HotelMapper hotelMapper;
+
+    public HotelMapper getHotelMapper() {
+        return hotelMapper;
+    }
+
+    public void setHotelMapper(HotelMapper hotelMapper) {
+        this.hotelMapper = hotelMapper;
+    }
+
+    @Override
+    public List<Hotel> queryAllHotel() {
+        return hotelMapper.selectList(null);
+    }
+
+    @Override
+    public Hotel queryHotelByhid(Long hid) {
+        return hotelMapper.selectById(hid);
+    }
+
+    @Override
+    public List<Hotel> queryGtstar(float star) {
+        QueryWrapper<Hotel> wrapper = new QueryWrapper<>();
+        wrapper.gt("star_rating",star);
+        return hotelMapper.selectList(wrapper);
+    }
+
+    @Override
+    public int deleteHotelByHid(Long hid) {
+        return hotelMapper.deleteById(hid);
+    }
+
+    @Override
+    public List<Hotel> queryGtReviewsum(int review_num) {
+        return hotelMapper.queryGtReviewsum(review_num);
+    }
 }
