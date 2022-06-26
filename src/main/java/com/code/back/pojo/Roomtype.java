@@ -47,5 +47,7 @@ public class Roomtype implements Serializable {
 
     private Integer surplusroomnum;
 
+    private Integer pnum;
+
 
 }

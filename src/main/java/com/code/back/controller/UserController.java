@@ -1,6 +1,7 @@
 package com.code.back.controller;
 
 
+import com.code.back.pojo.User;
 import com.code.back.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -8,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -27,16 +30,17 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping("/t2")
-    public String testSpringBoot() {
+    @ResponseBody
+    public String testSpringBoot(@RequestParam("uname")String Uname,@RequestParam("upassword")String Upassword) {
+        System.out.println(Uname);
+        System.out.println(Upassword);
         return "index";
     }
+
     @RequestMapping("/t1")
     public String verifyIdentity(Long uid, String password, Model model){
-        String pwd = userService.queryPwdById(uid);
-        if(pwd.equals(password)){
-            return "success";
-        }
-        else return "index";
+
+        return "success";
     }
 }
 

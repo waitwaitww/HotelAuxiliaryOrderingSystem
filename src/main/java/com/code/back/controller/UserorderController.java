@@ -30,7 +30,7 @@ public class UserorderController {
     private UserorderService userorderService;
 
     @RequestMapping("/t1")
-    public String test(Integer uid){
+    public String test(Long uid){
         List<Userorder> list = userorderService.queryAllUserorderByUId(uid);
         list.forEach(System.out::println);
         return "success";

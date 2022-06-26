@@ -72,16 +72,24 @@ public class UserorderServiceImpl extends ServiceImpl<UserorderMapper, Userorder
 
     @Override
     public Userorder queryUserorderById(Long oid) {
-        return null;
+        QueryWrapper<Userorder> wrapper = new QueryWrapper<>();
+        wrapper.eq("o_id",oid);
+        return userorderMapper.selectById(wrapper);
     }
 
     @Override
     public int updateUserorderProgress(Long oid) {
-        return 0;
+        QueryWrapper<Userorder> wrapper = new QueryWrapper<>();
+        wrapper.eq("o_id",oid);
+        Userorder o1 = userorderMapper.selectById(wrapper);
+        Integer scurnt = o1.getState();
+        o1.setState(scurnt++);
+        userorderMapper.updateById(o1);
+        return scurnt;
     }
 
     @Override
     public int deleteUserorderById(Long oid) {
-        return 0;
+        return userorderMapper.deleteById(oid);
     }
 }

@@ -17,4 +17,18 @@ import org.springframework.stereotype.Service;
 @Service
 public class RoomsumServiceImpl extends ServiceImpl<RoomsumMapper, Roomsum> implements RoomsumService {
 
+    @Override
+    public int queryRoomsum(Long roomsum_id) {
+        return 0;
+    }
+
+    @Override
+    public int queryRoomsumByHid(Long hid) {
+        return 0;
+    }
+
+    @Override
+    public int reduceRoomsum(Long roomsum_id) {
+        return 0;
+    }
 }
