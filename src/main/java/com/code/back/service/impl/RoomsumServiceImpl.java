@@ -1,9 +1,11 @@
 package com.code.back.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.code.back.pojo.Roomsum;
 import com.code.back.mapper.RoomsumMapper;
 import com.code.back.service.RoomsumService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,18 +19,47 @@ import org.springframework.stereotype.Service;
 @Service
 public class RoomsumServiceImpl extends ServiceImpl<RoomsumMapper, Roomsum> implements RoomsumService {
 
+    @Autowired
+    private RoomsumMapper roomsumMapper;
+
+    public RoomsumMapper getRoomsumMapper() {
+        return roomsumMapper;
+    }
+
+    public void setRoomsumMapper(RoomsumMapper roomsumMapper) {
+        this.roomsumMapper = roomsumMapper;
+    }
+
     @Override
     public int queryRoomsum(Long roomsum_id) {
-        return 0;
+        return roomsumMapper.selectById(roomsum_id).getRoomnum();
     }
 
     @Override
     public int queryRoomsumByHid(Long hid) {
-        return 0;
+        QueryWrapper<Roomsum> wrapper = new QueryWrapper<>();
+        wrapper.eq("h_id",hid);
+        return roomsumMapper.selectOne(wrapper).getRoomnum();
     }
 
     @Override
     public int reduceRoomsum(Long roomsum_id) {
+
+        return 0;
+    }
+
+    @Override
+    public int reduceRoomsumByHid(Long hid) {
+        return 0;
+    }
+
+    @Override
+    public int increaseRoomsum(Long roomsum_id) {
+        return 0;
+    }
+
+    @Override
+    public int increaseRoomsumByHid(Long hid) {
         return 0;
     }
 }

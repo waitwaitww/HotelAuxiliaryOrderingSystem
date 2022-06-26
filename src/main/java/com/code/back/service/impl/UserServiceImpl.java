@@ -52,4 +52,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public int updataUpassword(Long uid, String password) {
         return userMapper.updateUpassword(uid,password);
     }
+
+    @Override
+    public int deleteUserById(Long uid) {
+        return userMapper.deleteById(uid);
+    }
+
+    @Override
+    public int unsealUserById(Long uid) {
+        User user = userMapper.selectById(uid);
+        user.setDeleted(0);
+        return userMapper.updateById(user);
+    }
 }

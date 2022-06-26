@@ -24,4 +24,10 @@ public interface UserService extends IService<User> {
 
     //更新用户密码
     int updataUpassword(Long uid, String password);
+
+    //删除指定用户
+    int deleteUserById(Long uid);
+
+    //解冻指定用户
+    int unsealUserById(Long uid);
 }

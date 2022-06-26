@@ -23,6 +23,12 @@ public interface RoomsumService extends IService<Roomsum> {
     int reduceRoomsum(Long roomsum_id);
 
     //某指定酒店房间数量减一
+    int reduceRoomsumByHid(Long hid);
 
+    //某酒店房间数量加一
+    int increaseRoomsum(Long roomsum_id);
+
+    //某指定酒店房间数量加一
+    int increaseRoomsumByHid(Long hid);
 
 }
