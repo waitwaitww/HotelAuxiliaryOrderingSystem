@@ -34,12 +34,10 @@ public class UserController {
     @Qualifier("UserServiceImpl")
     private UserService userService;
 
-//    @RequestMapping("/t2")
-//    public String testSpringBoot(@RequestParam("uname")String Uname,@RequestParam("upassword")String Upassword) {
-//        System.out.println(Uname);
-//        System.out.println(Upassword);
-//        return "index";
-//    }
+    @RequestMapping("/t1")
+    public String testSpringBoot() {
+        return "index";
+    }
 
 //    @RequestMapping(value = "/loginById",produces = "application/json;charset=utf-8")
 //    public String loginId(@RequestParam("uid")Long uid, @RequestParam("upassword")String password){
