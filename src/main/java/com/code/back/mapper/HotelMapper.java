@@ -23,6 +23,11 @@ public interface HotelMapper extends BaseMapper<Hotel> {
     @Select("select * from haos.hetol where h_id = (select h_id from haos.review where number_of_review > #{number_of_review}")
     public List<Hotel> queryGtReviewsum(@Param("number_of_review") int reviewsum);
 
-    @Select("select * from haos.hetol where hname like %#{hname}% and star_rating>#{star_rating} and kewWord like %#{hname}% and h_id = (select h_id from haos.roomsum where roomnum >0)")
-    List<Hotel> queryHotelBySome(@Param("hanme")String hanme,@Param("star_rating") float star_rating, @Param("keyWord") String keyWord);
+    List<Hotel> queryHotelBySome1(@Param("hname")String hname, @Param("star_rating") float star_rating, @Param("keyWord") String keyWord);
+
+    List<Hotel> queryHotelBySome2(@Param("hname")String hname, @Param("star_rating") float star_rating, @Param("keyWord") String keyWord);
+
+    Hotel queryAllInforByHid(@Param("h_id") Long hid);
+
+//    List<Hotel> queryAllInf();
 }

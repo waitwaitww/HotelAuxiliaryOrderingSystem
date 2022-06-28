@@ -35,5 +35,17 @@ public interface UserService extends IService<User> {
     int unsealUserById(Long uid);
 
     //通过邮箱登录
-    String loginEmail(String  email);
+    String sendEmail(String  email);
+
+    //根据邮箱查找用户是否存在
+    int isUserExistByEmail(String email);
+
+    //根据id查找用户是否存在
+    int isUserExistByUid(Long uid);
+
+    //根据邮箱查找用户
+    User queryAllInfoByEmail(String email);
+
+    //添加用户
+    int addUser(User user);
 }

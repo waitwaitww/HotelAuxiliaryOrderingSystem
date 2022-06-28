@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -42,7 +43,7 @@ public class HotelServiceImpl extends ServiceImpl<HotelMapper, Hotel> implements
 
     @Override
     public Hotel queryHotelByhid(Long hid) {
-        return hotelMapper.selectById(hid);
+        return hotelMapper.queryAllInforByHid(hid);
     }
 
     @Override
@@ -64,11 +65,18 @@ public class HotelServiceImpl extends ServiceImpl<HotelMapper, Hotel> implements
 
     @Override
     public List<Hotel> qeuryHotelBySome(Map<String, Object> some) {
-        String hanme = (String) some.get("hname");
+        String hname = (String) some.get("hname");
         float star_rating = (float) some.get("star_rating");
         String keyWord = (String) some.get("keyword");
-        List<Hotel> hotels = hotelMapper.queryHotelBySome(hanme, star_rating, keyWord);
-//        if (hotels.size() > 0)
-        return null;
+        List<Hotel> hotels = new ArrayList<>();
+        if(star_rating >3.0){
+            hotels= hotelMapper.queryHotelBySome1("%" + hname + "%", star_rating, keyWord);
+        }
+        else{
+            hotels = hotelMapper.queryHotelBySome2("%" + hname + "%", star_rating, keyWord);
+        }
+
+        //        if (hotels.size() > 0)
+        return hotels;
     }
 }

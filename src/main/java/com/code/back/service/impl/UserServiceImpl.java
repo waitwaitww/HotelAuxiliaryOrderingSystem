@@ -8,6 +8,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.code.back.util.SendEmailUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 /**
@@ -24,6 +26,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private SendEmailUtils sendEmailUtils;
+
+    @Autowired
+    private static JavaMailSender javaMailSender;
+
+    @Value("${spring.mail.username}")
+    private static String from;
 
     public UserMapper getUserMapper() {
         return userMapper;
@@ -74,9 +85,38 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public String loginEmail(String email) {
-        String code = SendEmailUtils.sentEmail(email);
+    public String sendEmail(String email) {
+        String code = sendEmailUtils.sentEmail(email);
         return code;
+    }
+
+    @Override
+    public int isUserExistByEmail(String email) {
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        wrapper.eq("email",email);
+        User user = userMapper.selectOne(wrapper);
+        if(user!=null) return 1;
+        return 0;
+    }
+
+    @Override
+    public int isUserExistByUid(Long uid) {
+        User user = userMapper.selectById(uid);
+        if(user!=null) return 1;
+        return 0;
+    }
+
+    @Override
+    public User queryAllInfoByEmail(String email) {
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        wrapper.eq("email",email);
+        User user = userMapper.selectOne(wrapper);
+        return user;
+    }
+
+    @Override
+    public int addUser(User user) {
+        return userMapper.insert(user);
     }
 
 

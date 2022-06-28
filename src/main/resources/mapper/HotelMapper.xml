@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.code.back.mapper.HotelMapper">
+
+    <resultMap id="BaseResertMap" type="com.code.back.pojo.Hotel">
+        <id column="hname" property="hname"/>
+        <result column="overview" property="overview"/>
+        <result column="star_rating" property="starRating"/>
+    </resultMap>
+
+    <resultMap id="AllInfo" type="com.code.back.pojo.Hotel" extends="BaseResertMap">
+        <association javaType="com.code.back.pojo.Review" property="review">
+            <result column="number_of_review" property="numberOfReview"/>
+            <result column="rating_avg" property="ratingAvg"/>
+        </association>
+        <association property="hcheck" javaType="com.code.back.pojo.Hcheck">
+            <result column="check_in" property="checkIn"/>
+            <result column="check_out" property="checkOut"/>
+            <result column="rates_from" property="ratesFrom"/>
+        </association>
+        <association property="haddress" javaType="com.code.back.pojo.Haddress">
+            <result column="city" property="city"/>
+            <result column="state" property="state"/>
+            <result column="country" property="country"/>
+            <result column="longitude" property="longitude"/>
+            <result column="latitude" property="latitude"/>
+            <result column="city_no" property="cityNo"/>
+            <result column="country_no" property="countryNo"/>
+        </association>
+        <association property="roomsum"  javaType="com.code.back.pojo.Roomsum">
+            <result column="roomnum" property="roomnum"/>
+        </association>
+        <collection property="hphotos" ofType="com.code.back.pojo.Hphoto">
+            <result column="url" property="url"/>
+        </collection>
+    </resultMap>
+
+    <select id="queryHotelBySome1" resultMap="AllInfo">
+            select re.h_id,h.hname hname, star_rating,overview,number_of_review, rating_avg,check_in,check_out, rates_from,city,state,country,longitude,latitude,city_no,country_no,roomnum,url
+            from haos.hotel h, haos.hphoto hph, haos.review re,haos.roomsum rsm, haos.hcheck hch,haos.haddress had
+            where hname like #{hname} and star_rating>=#{star_rating} and h.h_id in (select h_id from haos.roomsum where roomnum >0)
+            and h.h_id = hph.h_id and h.h_id = re.h_id and h.h_id = rsm.h_id and h.h_id = hch.h_id and h.h_id = had.h_id
+    </select>
+    <select id="queryHotelBySome2" resultMap="AllInfo">
+            select h.h_id,h.hname hname, star_rating,overview,number_of_review, rating_avg,check_in,check_out, rates_from,city,state,country,longitude,latitude,city_no,country_no,roomnum,url
+            from haos.hotel h, haos.hphoto hph, haos.review re,haos.roomsum rsm, haos.hcheck hch,haos.haddress had
+            where hname like #{hname} and star_rating&lt;=#{star_rating} and h.h_id in (select h_id from haos.roomsum where roomnum >0)
+            and h.h_id = hph.h_id and h.h_id = re.h_id and h.h_id = rsm.h_id and h.h_id = hch.h_id and h.h_id = had.h_id
+
+    </select>
+    <select id="queryAllInforByHid" resultMap="AllInfo">
+            select h.h_id, h.hname hname, star_rating,overview,number_of_review, rating_avg,check_in,check_out, rates_from,city,state,country,longitude,latitude,city_no,country_no,roomnum,url
+            from haos.hotel h, haos.hphoto hph, haos.review re,haos.roomsum rsm, haos.hcheck hch,haos.haddress had
+            where  h.h_id = #{h_id}
+            and h.h_id = hph.h_id and h.h_id = re.h_id and h.h_id = rsm.h_id and h.h_id = hch.h_id and h.h_id = had.h_id
+    </select>
+</mapper>

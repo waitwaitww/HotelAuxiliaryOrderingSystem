@@ -4,21 +4,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.stereotype.Component;
 
+@Component
 public class SendEmailUtils {
 
     @Autowired
-    private static JavaMailSender javaMailSender;
+    private  JavaMailSender javaMailSender;
 
     @Value("${spring.mail.username}")
-    private static String from;
+    private  String from;
 
-    public static String sentEmail(String email){
+    public  String sentEmail(String email){
         String code = RandomUtil.randomNumbers(4); // 随机一个 4位长度的验证码
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(from);
-        message.setSubject(code);
-        message.setText("测试内容");
+        message.setSubject("小笼包酒店辅助订购系统");
+        message.setText("本次邮箱验证码为："+code);
         message.setTo(email);
         javaMailSender.send(message);
         return code;

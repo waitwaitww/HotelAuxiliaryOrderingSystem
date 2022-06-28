@@ -15,7 +15,7 @@ spring:
     protocol: smtps
     username: yf_200108@163.com
     password: CQYMEVJONDVIAMQU
-    port: 587
+    port: 465
     default-encoding: utf-8
 
 #日志配置
@@ -27,6 +27,7 @@ mybatis-plus:
     db-config:
       logic-delete-value: 1
       logic-not-delete-value: 0
+  mapper-locations: classpath*:/mapper/*.xml
 
 alipay:
   appId: 2021000121607408

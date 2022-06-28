@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.annotation.Version;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import java.io.Serializable;
+import java.util.List;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -38,9 +40,15 @@ public class Hotel implements Serializable {
 
     private Long roomsumId;
 
+    private Roomsum roomsum;
+
     private Long hadAddressId;
 
+    private Haddress haddress;
+
     private Long hchCheckId;
+
+    private Hcheck hcheck;
 
     private String hname;
 
@@ -53,6 +61,10 @@ public class Hotel implements Serializable {
     private Long checkId;
 
     private Long reviewId;
+
+    private Review review;
+
+    private List<Hphoto> hphotos;
 
     @TableLogic
     private Integer deleted;

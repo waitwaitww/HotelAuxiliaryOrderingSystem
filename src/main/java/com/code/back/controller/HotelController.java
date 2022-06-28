@@ -1,6 +1,7 @@
 package com.code.back.controller;
 
 
+import com.code.back.pojo.Hotel;
 import com.code.back.pojo.Msg;
 import com.code.back.service.HotelService;
 import com.code.back.util.ControllerUtils;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -30,7 +32,7 @@ public class HotelController {
     @Autowired
     private HotelService hotelService;
 
-    @RequestMapping("/queryhotelbysome")
+    @RequestMapping(value = "/queryhotelbysome", produces = "application/json;charset=utf-8")
     public String queryHotelBySome(@RequestParam("hname") String hname,
                                    @RequestParam("rating") String star,
                                    @RequestParam("keyword") String keyWord){
@@ -43,12 +45,15 @@ public class HotelController {
         some.put("hname",hname);
         some.put("star_rating",starrating);
         some.put("keyword",keyWord);
-
+        List<Hotel> hotels = hotelService.qeuryHotelBySome(some);
         Msg msg = new Msg();
-        msg.setResult("success");
-//        hotelService.qeuryHotelBySome(some);
+        msg.setResult(hotels);
         return jsonUtil.getJson(msg);
     }
 
+    @RequestMapping(value = "/hotelAllInfo", produces = "application/json;charset=utf-8")
+    public String hotelAllInfo(){
+        return null;
+    }
 }
 

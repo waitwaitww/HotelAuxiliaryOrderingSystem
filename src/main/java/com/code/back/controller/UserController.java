@@ -8,13 +8,9 @@ import com.code.back.util.jsonUtil;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -37,11 +33,12 @@ public class UserController {
     @Qualifier("UserServiceImpl")
     private UserService userService;
 
-    @RequestMapping("/t1")
-    public String testSpringBoot() {
-        userService.loginEmail("2075831247@qq.com");
-        return "index";
-    }
+
+//    @RequestMapping("/t1")
+//    public String testSpringBoot() {
+//        userService.sendEmail("2075831247@qq.com");
+//        return "index";
+//    }
 
 //    @RequestMapping(value = "/loginById",produces = "application/json;charset=utf-8")
 //    public String loginId(@RequestParam("uid")Long uid, @RequestParam("upassword")String password){
@@ -52,37 +49,85 @@ public class UserController {
 //        else return jsonUtil.getJson("false");
 //    }
 
-    @RequestMapping(value = "/t2",produces = "application/json;charset=utf-8")
-    public String loginEmail(@RequestParam("uname")String  email, @RequestParam("upassword")String password){
+    @RequestMapping(value = "/t2", produces = "application/json;charset=utf-8")
+    public String loginEmail(@RequestParam("uname") String email, @RequestParam("upassword") String password) {
 //        String pwdById = userService.queryPwdByEmail(email);
         String pwdById = userService.queryPwdByEmail(email);
         List<User> users = new ArrayList<>();
         String msg = "false";
-
         Msg msg1 = new Msg();
         msg1.setResult(msg);
-
         System.out.println("email");
-        if(pwdById.equals(password)) {
+        if (pwdById.equals(password)) {
             System.out.println(password);
             msg1.setResult("success");
             return jsonUtil.getJson(msg1);
-        }
-
-        else return jsonUtil.getJson(msg1);
+        } else return jsonUtil.getJson(msg1);
     }
 
 
 //    @AuthAccess
-    @RequestMapping("/sendemailcode")
-    public String sendEmailCode(@Param("email") String email){
-        String s = userService.loginEmail(email);
+//    @RequestMapping(value = "/sendemailcode",produces = "application/json;charset=utf-8")
+//    public String sendEmailCode(@RequestParam("email") String email){
+//        String s = userService.sendEmail(email);
+//        Msg msg = new Msg();
+//        msg.setResult("邮件发送成功");
+//        if(s.equals("")){
+//            msg.setResult("邮件发送失败");
+//        }
+//        return jsonUtil.getJson(msg);
+//    }
+
+    @RequestMapping(value = "/register-first", produces = "application/json;charset=utf-8")
+    public String registerFirst(@RequestParam("email") String email) {
         Msg msg = new Msg();
-        msg.setResult("邮件发送成功");
-        if(s.equals(null)){
-            msg.setResult("邮件发送失败");
+        int exist = userService.isUserExistByEmail(email);
+        if (exist == 1) {
+            msg.setResult("用户已存在");
+            return jsonUtil.getJson(msg);
+        }
+        String code = userService.sendEmail(email);
+        msg.setResult("false");
+        if (code.equals("")) {
+            return jsonUtil.getJson(msg);
+        }
+        msg.setResult(code);
+        return jsonUtil.getJson(msg);
+    }
+
+    @RequestMapping(value = "/register-second", produces="application/json;charset=utf-8")
+    public String registerSecond(@RequestParam("email") String email,@RequestParam("upassword") String upassword){
+        Msg msg = new Msg();
+        User user = new User();
+        user.setEmail(email);
+        user.setUpassword(upassword);
+        int i = userService.addUser(user);
+        msg.setResult("success");
+        if(i==0){
+            msg.setResult("false");
         }
         return jsonUtil.getJson(msg);
     }
+
+    @RequestMapping(value = "/changePwd", produces = "application/json;charset=utf-8")
+    public String changePwd(@Param("uid") Long uid,@Param("upassword") String upassword,@Param("newpassword") String newpassword){
+        int exist = userService.isUserExistByUid(uid);
+        Msg msg = new Msg();
+        if(exist == 0){
+            msg.setResult("用户不存在");
+            return jsonUtil.getJson(msg);
+        }
+        String oldpassword = userService.queryPwdById(uid);
+        if(upassword.equals(oldpassword)){
+            userService.updataUpassword(uid,newpassword);
+            msg.setResult("success");
+            return jsonUtil.getJson(msg);
+        }
+        msg.setResult("用户密码输入错误");
+        return jsonUtil.getJson(msg);
+    }
+
+
+
 }
 

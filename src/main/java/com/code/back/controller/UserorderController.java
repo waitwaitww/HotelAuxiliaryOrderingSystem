@@ -59,7 +59,7 @@ public class UserorderController {
     }
 
 
-    @RequestMapping("/addorder")
+    @RequestMapping(value = "/addorder",produces = "application/json;charset=utf-8")
     public String addOrder(@RequestParam("uid") Long uid,@RequestParam("rid") Long rid,
                            @RequestParam("num") int num,@RequestParam("pname1")String pname1,
                            @RequestParam("p1_tel")Long p1_tel,@RequestParam("pname2")String pname2,
@@ -82,7 +82,7 @@ public class UserorderController {
         return jsonUtil.getJson(msg);
     }
 
-    @RequestMapping("/queryallorderforsb")
+    @RequestMapping(value = "/queryallorderforsb",produces = "application/json;charset=utf-8")
     public String queryAllOrderForSb(Long uid){
         User user = userService.queryUserById(uid);
         Msg msg = new Msg();

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author 杨锋
  * @since 2022-06-25
  */
-@Controller
+@RestController
 @RequestMapping("/back/roomtype")
 public class RoomtypeController {
 
