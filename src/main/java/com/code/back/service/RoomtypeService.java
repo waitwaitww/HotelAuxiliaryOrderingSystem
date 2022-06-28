@@ -37,4 +37,6 @@ public interface RoomtypeService extends IService<Roomtype> {
 
     //某房型数量加一
     int increaseRoomtypeByRid(Long rid);
+
+
 }

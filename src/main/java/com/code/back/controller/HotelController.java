@@ -1,10 +1,19 @@
 package com.code.back.controller;
 
 
+import com.code.back.pojo.Msg;
+import com.code.back.service.HotelService;
+import com.code.back.util.ControllerUtils;
+import com.code.back.util.jsonUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * <p>
@@ -14,9 +23,32 @@ import org.springframework.web.bind.annotation.RestController;
  * @author 杨锋
  * @since 2022-06-25
  */
-@Controller
+@RestController
 @RequestMapping("/back/hotel")
 public class HotelController {
+
+    @Autowired
+    private HotelService hotelService;
+
+    @RequestMapping("/queryhotelbysome")
+    public String queryHotelBySome(@RequestParam("hname") String hname,
+                                   @RequestParam("rating") String star,
+                                   @RequestParam("keyword") String keyWord){
+
+        float starrating = ControllerUtils.starConversion(star);
+        System.out.println(hname);
+        System.out.println(keyWord);
+        System.out.println(starrating);
+        Map<String ,Object> some = new HashMap<>();
+        some.put("hname",hname);
+        some.put("star_rating",starrating);
+        some.put("keyword",keyWord);
+
+        Msg msg = new Msg();
+        msg.setResult("success");
+//        hotelService.qeuryHotelBySome(some);
+        return jsonUtil.getJson(msg);
+    }
 
 }
 

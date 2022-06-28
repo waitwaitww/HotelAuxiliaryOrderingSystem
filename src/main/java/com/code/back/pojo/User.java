@@ -51,5 +51,7 @@ public class User implements Serializable {
     @TableLogic
     private Integer deleted;
 
+    private String code;
+
 
 }

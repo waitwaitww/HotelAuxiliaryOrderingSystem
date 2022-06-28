@@ -7,6 +7,7 @@ import com.code.back.service.HphotoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +21,7 @@ import java.util.List;
  * @since 2022-06-25
  */
 @Service
+@Qualifier("HphotoServiceImpl")
 public class HphotoServiceImpl extends ServiceImpl<HphotoMapper, Hphoto> implements HphotoService {
 
     @Autowired

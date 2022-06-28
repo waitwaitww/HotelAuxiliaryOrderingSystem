@@ -5,8 +5,10 @@ import com.code.back.pojo.Msg;
 import com.code.back.pojo.User;
 import com.code.back.service.UserService;
 import com.code.back.util.jsonUtil;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,12 +32,14 @@ import java.util.List;
 @RequestMapping("/back/user")
 public class UserController {
 
+
     @Autowired
     @Qualifier("UserServiceImpl")
     private UserService userService;
 
     @RequestMapping("/t1")
     public String testSpringBoot() {
+        userService.loginEmail("2075831247@qq.com");
         return "index";
     }
 
@@ -66,6 +70,19 @@ public class UserController {
         }
 
         else return jsonUtil.getJson(msg1);
+    }
+
+
+//    @AuthAccess
+    @RequestMapping("/sendemailcode")
+    public String sendEmailCode(@Param("email") String email){
+        String s = userService.loginEmail(email);
+        Msg msg = new Msg();
+        msg.setResult("邮件发送成功");
+        if(s.equals(null)){
+            msg.setResult("邮件发送失败");
+        }
+        return jsonUtil.getJson(msg);
     }
 }
 

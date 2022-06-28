@@ -6,6 +6,7 @@ import com.code.back.mapper.HaddressMapper;
 import com.code.back.service.HaddressService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
  * @since 2022-06-25
  */
 @Service
+@Qualifier("HaddressServiceImpl")
 public class HaddressServiceImpl extends ServiceImpl<HaddressMapper, Haddress> implements HaddressService {
 
     @Autowired

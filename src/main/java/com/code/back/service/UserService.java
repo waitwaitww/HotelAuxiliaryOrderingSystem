@@ -33,4 +33,7 @@ public interface UserService extends IService<User> {
 
     //解冻指定用户
     int unsealUserById(Long uid);
+
+    //通过邮箱登录
+    String loginEmail(String  email);
 }

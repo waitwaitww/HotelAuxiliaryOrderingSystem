@@ -36,6 +36,9 @@ public interface UserorderService extends IService<Userorder> {
     //更新订单进度
     int updateUserorderProgress(Long oid);
 
+    //增加订单
+    int addUserorder(Userorder userorder);
+
     //删除订单
     int deleteUserorderById(Long oid);
 

@@ -5,6 +5,7 @@ import com.code.back.pojo.User;
 import com.code.back.mapper.UserMapper;
 import com.code.back.service.UserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.code.back.util.SendEmailUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,6 @@ import org.springframework.stereotype.Service;
 @Service
 @Qualifier("UserServiceImpl")
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
-
 
     @Autowired
     private UserMapper userMapper;
@@ -72,4 +72,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         user.setDeleted(0);
         return userMapper.updateById(user);
     }
+
+    @Override
+    public String loginEmail(String email) {
+        String code = SendEmailUtils.sentEmail(email);
+        return code;
+    }
+
+
 }

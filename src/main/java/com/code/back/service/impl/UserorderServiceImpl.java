@@ -89,6 +89,11 @@ public class UserorderServiceImpl extends ServiceImpl<UserorderMapper, Userorder
     }
 
     @Override
+    public int addUserorder(Userorder userorder) {
+        return userorderMapper.insert(userorder);
+    }
+
+    @Override
     public int deleteUserorderById(Long oid) {
         return userorderMapper.deleteById(oid);
     }
@@ -97,6 +102,5 @@ public class UserorderServiceImpl extends ServiceImpl<UserorderMapper, Userorder
     public List<String> queryAllReviewByHid(Long hid) {
         return userorderMapper.selectAllReviewByHid(hid);
     }
-
 
 }

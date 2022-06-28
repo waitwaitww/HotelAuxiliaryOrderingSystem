@@ -10,6 +10,14 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   profiles:
     active: dev
+  mail:
+    host: smtp.163.com
+    protocol: smtps
+    username: yf_200108@163.com
+    password: CQYMEVJONDVIAMQU
+    port: 587
+    default-encoding: utf-8
+
 #日志配置
 mybatis-plus:
   configuration:
@@ -19,7 +27,6 @@ mybatis-plus:
     db-config:
       logic-delete-value: 1
       logic-not-delete-value: 0
-
 
 alipay:
   appId: 2021000121607408

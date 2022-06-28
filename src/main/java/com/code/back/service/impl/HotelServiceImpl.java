@@ -6,9 +6,11 @@ import com.code.back.mapper.HotelMapper;
 import com.code.back.service.HotelService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -19,6 +21,7 @@ import java.util.List;
  * @since 2022-06-25
  */
 @Service
+@Qualifier("HotelServiceImpl")
 public class HotelServiceImpl extends ServiceImpl<HotelMapper, Hotel> implements HotelService {
 
     @Autowired
@@ -57,5 +60,15 @@ public class HotelServiceImpl extends ServiceImpl<HotelMapper, Hotel> implements
     @Override
     public List<Hotel> queryGtReviewsum(int review_num) {
         return hotelMapper.queryGtReviewsum(review_num);
+    }
+
+    @Override
+    public List<Hotel> qeuryHotelBySome(Map<String, Object> some) {
+        String hanme = (String) some.get("hname");
+        float star_rating = (float) some.get("star_rating");
+        String keyWord = (String) some.get("keyword");
+        List<Hotel> hotels = hotelMapper.queryHotelBySome(hanme, star_rating, keyWord);
+//        if (hotels.size() > 0)
+        return null;
     }
 }

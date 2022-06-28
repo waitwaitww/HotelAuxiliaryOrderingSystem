@@ -6,6 +6,7 @@ import com.code.back.mapper.RoomtypeMapper;
 import com.code.back.service.RoomtypeService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +20,7 @@ import java.util.List;
  * @since 2022-06-25
  */
 @Service
+@Qualifier("RoomtypeServiceImpl")
 public class RoomtypeServiceImpl extends ServiceImpl<RoomtypeMapper, Roomtype> implements RoomtypeService {
 
     @Autowired

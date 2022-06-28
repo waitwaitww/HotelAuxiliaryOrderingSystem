@@ -6,6 +6,7 @@ import com.code.back.mapper.ReviewMapper;
 import com.code.back.service.ReviewService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
  * @since 2022-06-25
  */
 @Service
+@Qualifier("ReviewServiceImpl")
 public class ReviewServiceImpl extends ServiceImpl<ReviewMapper, Review> implements ReviewService {
 
     @Autowired

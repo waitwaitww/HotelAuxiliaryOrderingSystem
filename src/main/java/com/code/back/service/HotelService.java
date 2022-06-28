@@ -4,6 +4,7 @@ import com.code.back.pojo.Hotel;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -30,4 +31,5 @@ public interface HotelService extends IService<Hotel> {
     //查询评论数大于某数的酒店
     List<Hotel> queryGtReviewsum(int review_num);
 
+    List<Hotel> qeuryHotelBySome(Map<String, Object> some);
 }
