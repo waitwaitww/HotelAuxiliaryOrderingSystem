@@ -29,5 +29,7 @@ public interface HotelMapper extends BaseMapper<Hotel> {
 
     Hotel queryAllInforByHid(@Param("h_id") Long hid);
 
+    List<Hotel> queryAllHotel();
+
 //    List<Hotel> queryAllInf();
 }

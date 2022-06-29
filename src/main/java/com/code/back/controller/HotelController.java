@@ -61,5 +61,13 @@ public class HotelController {
         return jsonUtil.getJson(hotelService.queryHotelByhid(hid));
 //        return jsonUtil.getJson(hotelCourseVoMapper.queryAllInfoByHid(hid));
     }
+
+    @RequestMapping(value = "/queryallhotel", produces = "application/json;charset=utf-8")
+    public String queryAllHotel(){
+        Msg msg = new Msg();
+        List<Hotel> hotels = hotelService.queryAllHotel();
+        msg.setResult(hotels);
+        return jsonUtil.getJson(msg);
+    }
 }
 

@@ -38,7 +38,7 @@ public class HotelServiceImpl extends ServiceImpl<HotelMapper, Hotel> implements
 
     @Override
     public List<Hotel> queryAllHotel() {
-        return hotelMapper.selectList(null);
+        return hotelMapper.queryAllHotel();
     }
 
     @Override

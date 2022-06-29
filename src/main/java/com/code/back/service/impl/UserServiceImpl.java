@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * <p>
  * ?û?? 服务实现类
@@ -120,6 +122,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             return 0;
         }
         return userMapper.insert(user);
+    }
+
+    @Override
+    public List<User> queryAllUser() {
+        return userMapper.selectList(null);
+    }
+
+    @Override
+    public List<User> queryUserByName(String uname) {
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        wrapper.like("uname" ,uname);
+        return userMapper.selectList(wrapper);
     }
 
 

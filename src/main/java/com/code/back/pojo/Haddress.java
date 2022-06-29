@@ -51,5 +51,6 @@ public class Haddress implements Serializable {
 
     private Integer countryNo;
 
+    private String addressLine;
 
 }

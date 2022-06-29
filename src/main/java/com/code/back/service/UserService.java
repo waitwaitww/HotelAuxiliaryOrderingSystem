@@ -3,6 +3,8 @@ package com.code.back.service;
 import com.code.back.pojo.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  * ?û?? 服务类
@@ -48,4 +50,10 @@ public interface UserService extends IService<User> {
 
     //添加用户
     int addUser(User user);
+
+    //查询所有用户
+    List<User> queryAllUser();
+
+    //根据用户名模糊查询用户
+    List<User> queryUserByName(String uname);
 }

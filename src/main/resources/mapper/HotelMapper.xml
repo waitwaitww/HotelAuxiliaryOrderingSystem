@@ -27,6 +27,7 @@
             <result column="latitude" property="latitude"/>
             <result column="city_no" property="cityNo"/>
             <result column="country_no" property="countryNo"/>
+            <result column="address_line" property="addressLine"/>
         </association>
         <association property="roomsum"  javaType="com.code.back.pojo.Roomsum">
             <result column="roomnum" property="roomnum"/>
@@ -37,22 +38,27 @@
     </resultMap>
 
     <select id="queryHotelBySome1" resultMap="AllInfo">
-            select re.h_id,h.hname hname, star_rating,overview,number_of_review, rating_avg,check_in,check_out, rates_from,city,state,country,longitude,latitude,city_no,country_no,roomnum,url
+            select re.h_id,h.hname hname, star_rating,overview,number_of_review, rating_avg,check_in,check_out, rates_from,city,state,country,longitude,latitude,city_no,country_no,roomnum,url,address_line
             from haos.hotel h, haos.hphoto hph, haos.review re,haos.roomsum rsm, haos.hcheck hch,haos.haddress had
             where hname like #{hname} and star_rating>=#{star_rating} and h.h_id in (select h_id from haos.roomsum where roomnum >0)
             and h.h_id = hph.h_id and h.h_id = re.h_id and h.h_id = rsm.h_id and h.h_id = hch.h_id and h.h_id = had.h_id
     </select>
     <select id="queryHotelBySome2" resultMap="AllInfo">
-            select h.h_id,h.hname hname, star_rating,overview,number_of_review, rating_avg,check_in,check_out, rates_from,city,state,country,longitude,latitude,city_no,country_no,roomnum,url
+            select h.h_id,h.hname hname, star_rating,overview,number_of_review, rating_avg,check_in,check_out, rates_from,city,state,country,longitude,latitude,city_no,country_no,roomnum,url,address_line
             from haos.hotel h, haos.hphoto hph, haos.review re,haos.roomsum rsm, haos.hcheck hch,haos.haddress had
             where hname like #{hname} and star_rating&lt;=#{star_rating} and h.h_id in (select h_id from haos.roomsum where roomnum >0)
             and h.h_id = hph.h_id and h.h_id = re.h_id and h.h_id = rsm.h_id and h.h_id = hch.h_id and h.h_id = had.h_id
 
     </select>
     <select id="queryAllInforByHid" resultMap="AllInfo">
-            select h.h_id, h.hname hname, star_rating,overview,number_of_review, rating_avg,check_in,check_out, rates_from,city,state,country,longitude,latitude,city_no,country_no,roomnum,url
+            select h.h_id, h.hname hname, star_rating,overview,number_of_review, rating_avg,check_in,check_out, rates_from,city,state,country,longitude,latitude,city_no,country_no,roomnum,url,address_line
             from haos.hotel h, haos.hphoto hph, haos.review re,haos.roomsum rsm, haos.hcheck hch,haos.haddress had
             where  h.h_id = #{h_id}
             and h.h_id = hph.h_id and h.h_id = re.h_id and h.h_id = rsm.h_id and h.h_id = hch.h_id and h.h_id = had.h_id
+    </select>
+    <select id="queryAllHotel" resultMap="AllInfo">
+            select h.h_id, h.hname hname, star_rating,overview,number_of_review, rating_avg,check_in,check_out, rates_from,city,state,country,longitude,latitude,city_no,country_no,roomnum,url,address_line
+            from haos.hotel h, haos.hphoto hph, haos.review re,haos.roomsum rsm, haos.hcheck hch,haos.haddress had
+            where  h.h_id = hph.h_id and h.h_id = re.h_id and h.h_id = rsm.h_id and h.h_id = hch.h_id and h.h_id = had.h_id
     </select>
 </mapper>
