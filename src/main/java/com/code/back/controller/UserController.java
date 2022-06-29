@@ -1,8 +1,11 @@
 package com.code.back.controller;
 
 
+import com.code.back.mapper.CodeMapper;
+import com.code.back.pojo.Code;
 import com.code.back.pojo.Msg;
 import com.code.back.pojo.User;
+import com.code.back.service.CodeService;
 import com.code.back.service.UserService;
 import com.code.back.util.jsonUtil;
 import org.apache.ibatis.annotations.Param;
@@ -32,6 +35,10 @@ public class UserController {
     @Autowired
     @Qualifier("UserServiceImpl")
     private UserService userService;
+
+    @Autowired
+    @Qualifier("CodeServiceImpl")
+    private CodeService codeService;
 
 
 //    @RequestMapping("/t1")
@@ -81,17 +88,22 @@ public class UserController {
     @RequestMapping(value = "/register-first", produces = "application/json;charset=utf-8")
     public String registerFirst(@RequestParam("email") String email) {
         Msg msg = new Msg();
-        int exist = userService.isUserExistByEmail(email);
-        if (exist == 1) {
-            msg.setResult("用户已存在");
-            return jsonUtil.getJson(msg);
-        }
-        String code = userService.sendEmail(email);
-        msg.setResult("false");
-        if (code.equals("")) {
-            return jsonUtil.getJson(msg);
-        }
-        msg.setResult(code);
+//        int exist = userService.isUserExistByEmail(email);
+//        if (exist == 1) {
+//            msg.setResult("用户已存在");
+//            return jsonUtil.getJson(msg);
+//        }
+//        String code = userService.sendEmail(email);
+//        Code code1 = new Code();
+//        code1.setCode(code);
+//        code1.setEmail(email);
+////        codeService.addCode(code1);
+//        msg.setResult("false");
+//        if (code.equals("")) {
+//            return jsonUtil.getJson(msg);
+//        }
+//        msg.setResult(code);
+        msg.setResult("1234");
         return jsonUtil.getJson(msg);
     }
 

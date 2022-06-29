@@ -50,7 +50,7 @@ public class mybatisplusconfig {
         mpg.setPackageInfo(pc);
         //4、策略配置
         StrategyConfig strategy = new StrategyConfig();
-        strategy.setInclude("roomtype");//设置要映射的表名,只需改这里即可
+        strategy.setInclude("code");//设置要映射的表名,只需改这里即可
         strategy.setNaming(NamingStrategy.underline_to_camel);
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
         strategy.setEntityLombokModel(true);//是否使用lombok开启注解

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.code.back.mapper.HotelCourseVoMapper">
+    
+    <resultMap id="BaseResertMap" type="com.code.back.CourseVo.HotelCourseVo">
+        <id column="id" property="id"/>
+        <result column="hid" property="h_id"/>
+        <result column="hname" property="hname"/>
+        <result column="star_rating" property="starRating"/>
+        <result column="overview" property="overview"/>
+        <result column="city" property="city"/>
+        <result column="state" property="state"/>
+        <result column="country" property="country"/>
+        <result column="longitude" property="longitude"/>
+        <result column="latitude" property="latitude"/>
+        <result column="city_no" property="cityNo"/>
+        <result column="country_no" property="countryNo"/>
+        <result column="check_in" property="checkIn"/>
+        <result column="cjeck_out" property="checkOut"/>
+        <result column="rates_from" property="ratesFrom"/>
+        <result column="number_of_review" property="numberOfReview"/>
+        <result column="rating_avg" property="ratingAvg"/>
+        <result column="roomnum" property="roomnum"/>
+    </resultMap>
+
+    <resultMap id="map1" extends="BaseResertMap" type="com.code.back.CourseVo.HotelCourseVo">
+        <collection property="hphotos" ofType="com.code.back.pojo.Hphoto">
+            <result column="url" property="url"/>
+        </collection>
+    </resultMap>
+
+    <select id="queryAllInfoByHid" resultMap="map1">
+        select h.h_id hid, h.hname hname, star_rating,overview,number_of_review, rating_avg,check_in,check_out, rates_from,city,state,country,longitude,latitude,city_no,country_no,roomnum,url
+            from haos.hotel h, haos.hphoto hph, haos.review re,haos.roomsum rsm, haos.hcheck hch,haos.haddress had
+            where  h.h_id = #{h_id}
+            and h.h_id = hph.h_id and h.h_id = re.h_id and h.h_id = rsm.h_id and h.h_id = hch.h_id and h.h_id = had.h_id
+    </select>
+</mapper>

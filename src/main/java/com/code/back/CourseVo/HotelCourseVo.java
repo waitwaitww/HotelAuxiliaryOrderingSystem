@@ -1,20 +1,27 @@
 package com.code.back.CourseVo;
 
+import com.code.back.pojo.Hphoto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
 public class HotelCourseVo {
     private Long id;
 
+    private Long h_id;
+
     private String hname;
 
-    private float star_rating;
+    private float starRating;
 
     private String overview;
 
@@ -38,7 +45,7 @@ public class HotelCourseVo {
 
     private float ratesFrom;
 
-    private List<String> url;
+    private List<Hphoto> hphotos;
 
     private int numberOfReview;
 

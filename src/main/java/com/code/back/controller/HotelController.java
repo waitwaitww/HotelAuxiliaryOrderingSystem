@@ -1,11 +1,13 @@
 package com.code.back.controller;
 
 
+import com.code.back.mapper.HotelCourseVoMapper;
 import com.code.back.pojo.Hotel;
 import com.code.back.pojo.Msg;
 import com.code.back.service.HotelService;
 import com.code.back.util.ControllerUtils;
 import com.code.back.util.jsonUtil;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +34,9 @@ public class HotelController {
     @Autowired
     private HotelService hotelService;
 
+    @Autowired
+    private HotelCourseVoMapper hotelCourseVoMapper;
+
     @RequestMapping(value = "/queryhotelbysome", produces = "application/json;charset=utf-8")
     public String queryHotelBySome(@RequestParam("hname") String hname,
                                    @RequestParam("rating") String star,
@@ -52,8 +57,9 @@ public class HotelController {
     }
 
     @RequestMapping(value = "/hotelAllInfo", produces = "application/json;charset=utf-8")
-    public String hotelAllInfo(){
-        return null;
+    public String hotelAllInfo(@Param("hid") Long hid){
+//        return jsonUtil.getJson(hotelService.queryHotelByhid(hid));
+        return jsonUtil.getJson(hotelCourseVoMapper.queryAllInfoByHid(hid));
     }
 }
 
