@@ -1,5 +1,6 @@
-package com.code.back.CourseVo;
+package com.code.back.Vo;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.code.back.pojo.Hphoto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -45,7 +46,12 @@ public class HotelCourseVo {
 
     private float ratesFrom;
 
+//    @TableField(exist = false)
     private List<Hphoto> hphotos;
+
+    private List<String> urls;
+
+    private photos photos;
 
     private int numberOfReview;
 

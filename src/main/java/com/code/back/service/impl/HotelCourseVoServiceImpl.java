@@ -1,7 +1,7 @@
 package com.code.back.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.code.back.CourseVo.HotelCourseVo;
+import com.code.back.Vo.HotelCourseVo;
 import com.code.back.mapper.HotelCourseVoMapper;
 import com.code.back.service.HotelCourseVoService;
 import org.springframework.beans.factory.annotation.Qualifier;

@@ -116,6 +116,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public int addUser(User user) {
+        if (isUserExistByEmail(user.getEmail()) == 1){
+            return 0;
+        }
         return userMapper.insert(user);
     }
 

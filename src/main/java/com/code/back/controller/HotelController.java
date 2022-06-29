@@ -58,8 +58,8 @@ public class HotelController {
 
     @RequestMapping(value = "/hotelAllInfo", produces = "application/json;charset=utf-8")
     public String hotelAllInfo(@Param("hid") Long hid){
-//        return jsonUtil.getJson(hotelService.queryHotelByhid(hid));
-        return jsonUtil.getJson(hotelCourseVoMapper.queryAllInfoByHid(hid));
+        return jsonUtil.getJson(hotelService.queryHotelByhid(hid));
+//        return jsonUtil.getJson(hotelCourseVoMapper.queryAllInfoByHid(hid));
     }
 }
 

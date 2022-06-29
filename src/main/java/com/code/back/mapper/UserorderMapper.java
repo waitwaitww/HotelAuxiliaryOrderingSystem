@@ -21,4 +21,7 @@ public interface UserorderMapper extends BaseMapper<Userorder> {
 
     @Select("select review from haos.userorder where r_id = (select r_id from haos.roomtype where h_id = #{h_id})")
     List<String> selectAllReviewByHid(@Param("h_id") Long hid);
+
+
+//    List<Userorder> queryAllUserorderByUId();
 }

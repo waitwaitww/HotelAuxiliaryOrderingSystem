@@ -16,7 +16,7 @@ public class SendEmailUtils {
     private  String from;
 
     public  String sentEmail(String email){
-        String code = RandomUtil.randomNumbers(4); // 随机一个 4位长度的验证码
+        String code = RandomUtil.randomNumbers(6); // 随机一个 4位长度的验证码
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(from);
         message.setSubject("小笼包酒店辅助订购系统");

@@ -1,11 +1,10 @@
 package com.code;
 
 
-import com.code.back.CourseVo.HotelCourseVo;
+import com.code.back.Vo.HotelCourseVo;
+import com.code.back.Vo.UserorderVo;
 import com.code.back.mapper.HotelCourseVoMapper;
-import com.code.back.mapper.HotelMapper;
-import com.code.back.pojo.Hotel;
-import lombok.val;
+import com.code.back.mapper.UserorderVoMapper;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +19,13 @@ import java.util.List;
 class DemoApplicationTests {
 
     @Autowired
-    HotelCourseVoMapper hotelCourseVoMapper;
+    UserorderVoMapper userorderVoMapper;
 
     @Test
     void contextLoads() {
-        List<HotelCourseVo> hotel = hotelCourseVoMapper.queryAllInfoByHid(47635L);
-        for (HotelCourseVo vo : hotel) {
-            System.out.println(vo);
+        List<UserorderVo> userorderVos = userorderVoMapper.queryAllOrderByUid(123321L);
+        for (UserorderVo userorderVo : userorderVos) {
+            System.out.println(userorderVo);
         }
     }
 

@@ -3,7 +3,8 @@
 <mapper namespace="com.code.back.mapper.HotelMapper">
 
     <resultMap id="BaseResertMap" type="com.code.back.pojo.Hotel">
-        <id column="hname" property="hname"/>
+        <id column="h_id" property="hid"/>
+        <result column="hname" property="hname"/>
         <result column="overview" property="overview"/>
         <result column="star_rating" property="starRating"/>
     </resultMap>

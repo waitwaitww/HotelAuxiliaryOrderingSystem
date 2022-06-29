@@ -1,7 +1,6 @@
 package com.code.back.controller;
 
 
-import com.code.back.mapper.CodeMapper;
 import com.code.back.pojo.Code;
 import com.code.back.pojo.Msg;
 import com.code.back.pojo.User;
@@ -88,22 +87,22 @@ public class UserController {
     @RequestMapping(value = "/register-first", produces = "application/json;charset=utf-8")
     public String registerFirst(@RequestParam("email") String email) {
         Msg msg = new Msg();
-//        int exist = userService.isUserExistByEmail(email);
-//        if (exist == 1) {
-//            msg.setResult("用户已存在");
-//            return jsonUtil.getJson(msg);
-//        }
-//        String code = userService.sendEmail(email);
-//        Code code1 = new Code();
-//        code1.setCode(code);
-//        code1.setEmail(email);
-////        codeService.addCode(code1);
-//        msg.setResult("false");
-//        if (code.equals("")) {
-//            return jsonUtil.getJson(msg);
-//        }
-//        msg.setResult(code);
-        msg.setResult("1234");
+        int exist = userService.isUserExistByEmail(email);
+        if (exist == 1) {
+            msg.setResult("用户已存在");
+            return jsonUtil.getJson(msg);
+        }
+        String code = userService.sendEmail(email);
+        Code code1 = new Code();
+        code1.setCode(code);
+        code1.setEmail(email);
+//        codeService.addCode(code1);
+        msg.setResult("false");
+        if (code.equals("")) {
+            return jsonUtil.getJson(msg);
+        }
+        msg.setResult(code);
+//        msg.setResult("1234");
         return jsonUtil.getJson(msg);
     }
 
@@ -114,6 +113,7 @@ public class UserController {
         user.setEmail(email);
         user.setUpassword(upassword);
         int i = userService.addUser(user);
+        System.out.println(i);
         msg.setResult("success");
         if(i==0){
             msg.setResult("false");
@@ -140,6 +140,22 @@ public class UserController {
     }
 
 
+    @RequestMapping(value = "/modifinfo", produces = "application/json;charset=utf-8")
+    public String modifyInfo(@RequestParam("u_id") Long uid,@RequestParam("uname") String uname,@RequestParam("age") int age,
+                             @RequestParam("sex")int sex,@RequestParam("userdescribe") String userdescribe){
+        Msg msg = new Msg();
+        msg.setResult("false");
+        User user = userService.queryUserById(uid);
+        user.setSex(sex);
+        user.setAge(age);
+        user.setUserdescribe(userdescribe);
+        user.setUname(uname);
+        int i = userService.updataUser(user);
+        if(i == 1) {
+            msg.setResult("success");
+        }
+        return jsonUtil.getJson(msg);
+    }
 
 }
 

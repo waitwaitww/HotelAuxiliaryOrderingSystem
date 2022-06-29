@@ -1,6 +1,8 @@
 package com.code.back.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.code.back.Vo.UserorderVo;
+import com.code.back.mapper.UserorderVoMapper;
 import com.code.back.pojo.Userorder;
 import com.code.back.mapper.UserorderMapper;
 import com.code.back.service.UserorderService;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -26,6 +29,9 @@ public class UserorderServiceImpl extends ServiceImpl<UserorderMapper, Userorder
     @Autowired
     private UserorderMapper userorderMapper;
 
+    @Autowired
+    private UserorderVoMapper userorderVoMapper;
+
     public UserorderMapper getUserorderMapper() {
         return userorderMapper;
     }
@@ -36,45 +42,27 @@ public class UserorderServiceImpl extends ServiceImpl<UserorderMapper, Userorder
 
 
     @Override
-    public List<Userorder> queryAllUserorderByUId(Long uid) {
-        QueryWrapper<Userorder> wrapper = new QueryWrapper<>();
-        wrapper.eq("u_id",uid);
-        return userorderMapper.selectList(wrapper);
+    public List<UserorderVo> queryAllUserorderByUId(Long uid) {
+        return userorderVoMapper.queryAllOrderByUid(uid);
     }
 
     @Override
-    public List<Userorder> queryAll0OrderById(Long uid) {
-        QueryWrapper<Userorder> wrapper = new QueryWrapper<>();
-        wrapper.eq("state",0);
-        return userorderMapper.selectList(wrapper);
+    public List<UserorderVo> queryAllStateOrderById(Long uid,int state) {
+        return userorderVoMapper.queryAllStateOrderById(uid,state);
     }
 
     @Override
-    public List<Userorder> queryAll1OrderById(Long uid) {
-        QueryWrapper<Userorder> wrapper = new QueryWrapper<>();
-        wrapper.eq("state",1);
-        return userorderMapper.selectList(wrapper);
+    public int updateSuccessPay(Long oid, Date payTime) {
+        Userorder userorder = userorderMapper.selectById(oid);
+        userorder.setPayTime(payTime);
+        userorder.setState(1);
+        return userorderMapper.updateById(userorder);
     }
 
-    @Override
-    public List<Userorder> queryAll2OrderById(Long uid) {
-        QueryWrapper<Userorder> wrapper = new QueryWrapper<>();
-        wrapper.eq("state",2);
-        return userorderMapper.selectList(wrapper);
-    }
 
     @Override
-    public List<Userorder> queryAll3OrderById(Long uid) {
-        QueryWrapper<Userorder> wrapper = new QueryWrapper<>();
-        wrapper.eq("state",3);
-        return userorderMapper.selectList(wrapper);
-    }
-
-    @Override
-    public Userorder queryUserorderById(Long oid) {
-        QueryWrapper<Userorder> wrapper = new QueryWrapper<>();
-        wrapper.eq("o_id",oid);
-        return userorderMapper.selectById(wrapper);
+    public UserorderVo queryUserorderById(Long oid) {
+        return userorderVoMapper.queryUserorderByOid(oid);
     }
 
     @Override

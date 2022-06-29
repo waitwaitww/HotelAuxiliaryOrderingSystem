@@ -34,7 +34,7 @@ public class Hotel implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "h_id", type = IdType.ID_WORKER)
-    private Long hId;
+    private Long hid;
 
     private Long revReviewId;
 

@@ -1,8 +1,10 @@
 package com.code.back.service;
 
+import com.code.back.Vo.UserorderVo;
 import com.code.back.pojo.Userorder;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -15,23 +17,18 @@ import java.util.List;
  */
 public interface UserorderService extends IService<Userorder> {
     //查询某用户所有订单
-    List<Userorder> queryAllUserorderByUId(Long uid);
+    List<UserorderVo> queryAllUserorderByUId(Long uid);
 
     //查询某用户未支付的订单
     //未支付：0、未出行：1、未评论：2、已评论：3
-    List<Userorder> queryAll0OrderById(Long uid);
+    List<UserorderVo> queryAllStateOrderById(Long uid,int state);
 
-    //查询某用户未出行的订单
-    List<Userorder> queryAll1OrderById(Long uid);
+    //完成支付的订单信息修改
+    int updateSuccessPay(Long oid, Date payTime);
 
-    //查询某用户未评论的订单
-    List<Userorder> queryAll2OrderById(Long uid);
-
-    //查询某用户已评论的订单
-    List<Userorder> queryAll3OrderById(Long uid);
 
     //查询某订单
-    Userorder queryUserorderById(Long oid);
+    UserorderVo queryUserorderById(Long oid);
 
     //更新订单进度
     int updateUserorderProgress(Long oid);
