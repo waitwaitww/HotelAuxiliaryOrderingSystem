@@ -1,5 +1,6 @@
 package com.code.back.service.impl;
 
+import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.code.back.Vo.UserorderVo;
 import com.code.back.mapper.UserorderVoMapper;
@@ -52,10 +53,11 @@ public class UserorderServiceImpl extends ServiceImpl<UserorderMapper, Userorder
     }
 
     @Override
-    public int updateSuccessPay(Long oid, Date payTime) {
+    public int updateSuccessPay(Long oid, Date payTime,String alipayNo) {
         Userorder userorder = userorderMapper.selectById(oid);
         userorder.setPayTime(payTime);
         userorder.setState(1);
+        userorder.setAlipayNo(alipayNo);
         return userorderMapper.updateById(userorder);
     }
 
@@ -89,6 +91,44 @@ public class UserorderServiceImpl extends ServiceImpl<UserorderMapper, Userorder
     @Override
     public List<String> queryAllReviewByHid(Long hid) {
         return userorderMapper.selectAllReviewByHid(hid);
+    }
+
+    @Override
+    public int updateCheckInOrder(Long oid) {
+        Userorder userorder = userorderMapper.selectById(oid);
+        String now = DateUtil.now();
+        userorder.setCheckinTime(DateUtil.parseDateTime(now));
+        userorder.setState(2);
+        return userorderMapper.updateById(userorder);
+    }
+
+    @Override
+    public int updateCheckOutOrder(Long oid) {
+        Userorder userorder = userorderMapper.selectById(oid);
+        String now = DateUtil.now();
+        userorder.setCheckoutTime(DateUtil.parseDateTime(now));
+        userorder.setState(3);
+        return userorderMapper.updateById(userorder);
+    }
+
+    @Override
+    public int comment(Long oid, float rating, String review) {
+        Userorder userorder = userorderMapper.selectById(oid);
+        userorder.setRating(rating);
+        userorder.setReview(review);
+        return userorderMapper.updateById(userorder);
+    }
+
+    @Override
+    public Userorder quserOrederByOid(Long oid) {
+        return userorderMapper.selectById(oid);
+    }
+
+    @Override
+    public Userorder queryOrderByAlipayNo(String alipayNo) {
+        QueryWrapper<Userorder> wrapper = new QueryWrapper<>();
+        wrapper.eq("alipay_no",alipayNo);
+        return userorderMapper.selectOne(wrapper);
     }
 
 }

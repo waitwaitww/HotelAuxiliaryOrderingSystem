@@ -7,7 +7,6 @@ import com.code.back.pojo.User;
 import com.code.back.service.CodeService;
 import com.code.back.service.UserService;
 import com.code.back.util.jsonUtil;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -132,7 +130,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/changePwd", produces = "application/json;charset=utf-8")
-    public String changePwd(@Param("uid") Long uid,@Param("upassword") String upassword,@Param("newpassword") String newpassword){
+    public String changePwd(@RequestParam("uid") Long uid,@RequestParam("upassword") String upassword,@RequestParam("newpassword") String newpassword){
         int exist = userService.isUserExistByUid(uid);
         Msg msg = new Msg();
         if(exist == 0){
@@ -180,6 +178,15 @@ public class UserController {
         List<User> users = userService.queryUserByName(uname);
         Msg msg = new Msg();
         msg.setResult(users);
+        return jsonUtil.getJson(msg);
+    }
+
+    @RequestMapping(value = "/logout",produces = "application/json;charset=utf-8")
+    public String logOut(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        session.removeAttribute("user");
+        Msg msg = new Msg();
+        msg.setResult("success");
         return jsonUtil.getJson(msg);
     }
 

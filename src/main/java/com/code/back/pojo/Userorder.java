@@ -69,5 +69,7 @@ public class Userorder implements Serializable {
     @TableLogic
     private Integer deleted;
 
+    private String alipayNo;
+
 
 }

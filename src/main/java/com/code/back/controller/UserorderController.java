@@ -1,19 +1,22 @@
 package com.code.back.controller;
 
 
-import com.alipay.easysdk.factory.Factory;
+import cn.hutool.core.date.DateUnit;
+import cn.hutool.core.date.DateUtil;
+import com.alipay.api.internal.util.AlipaySignature;
 import com.code.back.Vo.UserorderVo;
+import com.code.back.config.AlipayConfig;
+import com.code.back.pojo.AliPay;
 import com.code.back.pojo.Msg;
 import com.code.back.pojo.Roomtype;
-import com.code.back.pojo.User;
 import com.code.back.pojo.Userorder;
 import com.code.back.service.*;
 import com.code.back.util.jsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -45,6 +48,13 @@ public class UserorderController {
     @Autowired
     @Qualifier("RoomtypeServiceImpl")
     private RoomtypeService roomtypeService;
+
+    @Autowired
+    @Qualifier("RoomsumServiceImpl")
+    private RoomsumService roomsumService;
+
+    @Resource
+    AlipayConfig aliPayConfig;
 
 
     @RequestMapping("/t1")
@@ -79,8 +89,12 @@ public class UserorderController {
             userorder.setPname2(pname2);
             userorder.setP1Tel(p1_tel);
             userorder.setP2Tel(p2_tel);
+            userorder.setCreateTime(new Date());
             userorderService.addUserorder(userorder);
             msg.setResult(userorder);
+            roomtypeService.reduceRoomtypeByRid(rid);
+            Long hid = roomtypeService.queryRoomtype(rid).getHId();
+            roomsumService.reduceRoomsumByHid(hid);
         }
         return jsonUtil.getJson(msg);
     }
@@ -109,43 +123,63 @@ public class UserorderController {
         return jsonUtil.getJson(msg);
     }
 
-    @PostMapping(value = "/notify",produces = "application/json;charset=utf-8")  // 注意这里必须是POST接口
-    public String payNotify(HttpServletRequest request) throws Exception {
-        if (request.getParameter("trade_status").equals("TRADE_SUCCESS")) {
-            System.out.println("=========支付宝异步回调========");
 
-            Map<String, String> params = new HashMap<>();
-            Map<String, String[]> requestParams = request.getParameterMap();
-            for (String name : requestParams.keySet()) {
-                params.put(name, request.getParameter(name));
-                // System.out.println(name + " = " + request.getParameter(name));
-            }
 
-            String tradeNo = params.get("out_trade_no");
-            String gmtPayment = params.get("gmt_payment");
-            String alipayTradeNo = params.get("trade_no");
-            Date payTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(params.get("gmt_payment"));
-            // 支付宝验签
-            if (Factory.Payment.Common().verifyNotify(params)) {
-                // 验签通过
-                System.out.println("交易名称: " + params.get("subject"));
-                System.out.println("交易状态: " + params.get("trade_status"));
-                System.out.println("支付宝交易凭证号: " + params.get("trade_no"));
-                System.out.println("商户订单号: " + params.get("out_trade_no"));
-                System.out.println("交易金额: " + params.get("total_amount"));
-                System.out.println("买家在支付宝唯一id: " + params.get("buyer_id"));
-                System.out.println("买家付款时间: " + params.get("gmt_payment"));
-                System.out.println("买家付款金额: " + params.get("buyer_pay_amount"));
-
-                // 更新订单未已支付
-                int i = userorderService.updateSuccessPay(Long.valueOf(tradeNo), payTime);
-//                userorderService.(tradeNo, "已支付", gmtPayment, alipayTradeNo);
-            }
+    @RequestMapping(value = "/checkin",produces = "application/json;charset=utf-8")
+    public String checkIn(@RequestParam("o_id") Long oid){
+        Msg msg = new Msg();
+        msg.setResult("success");
+        int i = userorderService.updateCheckInOrder(oid);
+        if(i == 0){
+            msg.setResult("false");
         }
-        return "success";
+        return jsonUtil.getJson(msg);
     }
 
-//    @RequestMapping(value = "/queryallorderforsb",produces = "application/json;charset=utf-8")
-//    public String query
+    @RequestMapping(value = "/checkout",produces = "application/json;charset=utf-8")
+    public String checkOut(@RequestParam("o_id")Long oid){
+        Msg msg = new Msg();
+        msg.setResult("success");
+        int i = userorderService.updateCheckOutOrder(oid);
+        if(i == 0){
+            msg.setResult("false");
+        }
+        Userorder userorder = userorderService.quserOrederByOid(oid);
+        roomtypeService.increaseRoomtypeByRid(userorder.getRId());
+        Roomtype roomtype = roomtypeService.queryRoomtype(userorder.getRId());
+        roomsumService.increaseRoomsumByHid(roomtype.getHId());
+        return jsonUtil.getJson(msg);
+    }
+
+    @RequestMapping(value = "/comment",produces = "application/json;charset=utf-8")
+    public String comment(@RequestParam("o_id")Long oid,@RequestParam("rating")float rating,@RequestParam("review")String review){
+        Msg msg = new Msg();
+        msg.setResult("success");
+        int comment = userorderService.comment(oid, rating, review);
+        if(comment == 0){
+            msg.setResult("false");
+        }
+        return jsonUtil.getJson(msg);
+    }
+
+    @RequestMapping(value = "/cancellationorder",produces = "application/json;charset=utf-8")
+    public String cancellationOrder(@RequestParam("o_id")Long oid, AliPay aliPay){
+        Msg msg = new Msg();
+        msg.setResult("success");
+        Userorder userorder = userorderService.quserOrederByOid(oid);
+        if(userorder.getState() == 0){
+            int i = userorderService.deleteUserorderById(oid);
+            if(i == 0){
+                userorderService.deleteUserorderById(userorder.getOId());
+                roomtypeService.increaseRoomtypeByRid(userorder.getRId());
+                Roomtype roomtype = roomtypeService.queryRoomtype(userorder.getRId());
+                roomsumService.increaseRoomsum(roomtype.getHId());
+            }
+            else{
+                msg.setResult("false");
+            }
+        }
+        return jsonUtil.getJson(msg);
+    }
 }
 

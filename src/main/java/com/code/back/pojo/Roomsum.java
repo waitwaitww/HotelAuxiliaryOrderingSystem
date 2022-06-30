@@ -33,8 +33,6 @@ public class Roomsum implements Serializable {
     @TableId(value = "roomsum_id", type = IdType.ID_WORKER)
     private Long roomsumId;
 
-    private Long hotHId;
-
     private Long hId;
 
     private Integer roomnum;

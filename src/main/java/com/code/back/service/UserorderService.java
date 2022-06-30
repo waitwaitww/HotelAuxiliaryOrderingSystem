@@ -24,7 +24,7 @@ public interface UserorderService extends IService<Userorder> {
     List<UserorderVo> queryAllStateOrderById(Long uid,int state);
 
     //完成支付的订单信息修改
-    int updateSuccessPay(Long oid, Date payTime);
+    int updateSuccessPay(Long oid, Date payTime,String alipayNo);
 
 
     //查询某订单
@@ -41,4 +41,15 @@ public interface UserorderService extends IService<Userorder> {
 
     //查询某酒店的所有评论
     List<String> queryAllReviewByHid(Long hid);
+
+    int updateCheckInOrder(Long oid);
+
+    int updateCheckOutOrder(Long oid);
+
+    int comment(Long oid, float rating, String review);
+
+    Userorder quserOrederByOid(Long oid);
+
+    //通过alipayno查找订单
+    Userorder queryOrderByAlipayNo(String alipayNo);
 }
