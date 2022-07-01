@@ -38,4 +38,10 @@ public interface HotelService extends IService<Hotel> {
 
     //按照筛选条件查询
 
+
+    //添加酒店
+    Long addHotel(String hname,float star,String overview);
+
+    //更改酒店信息
+    int changeHotel(Long hid,String hname,float star,String overview);
 }

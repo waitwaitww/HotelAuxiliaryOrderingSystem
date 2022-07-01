@@ -27,7 +27,7 @@ public class AdminController {
     @Qualifier("AdminServiceImpl")
     private AdminService adminService;
 
-    @RequestMapping(value = "/adminlogin" ,produces ="application/json;charset=utf-8" )
+    @RequestMapping(value = "/login" ,produces ="application/json;charset=utf-8" )
     public String adminLogin(@RequestParam("aname")String aname,@RequestParam("apassword") String apassword){
         Msg msg = new Msg();
         msg.setResult("false");

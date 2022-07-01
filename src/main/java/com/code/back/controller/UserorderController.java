@@ -3,10 +3,7 @@ package com.code.back.controller;
 
 import com.code.back.Vo.UserorderVo;
 import com.code.back.config.AlipayConfig;
-import com.code.back.pojo.AliPay;
-import com.code.back.pojo.Msg;
-import com.code.back.pojo.Roomtype;
-import com.code.back.pojo.Userorder;
+import com.code.back.pojo.*;
 import com.code.back.service.*;
 import com.code.back.util.jsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +11,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.List;
 
@@ -67,13 +66,16 @@ public class UserorderController {
     }
 
     @RequestMapping(value = "/addorder", produces = "application/json;charset=utf-8")
-    public String addOrder(@RequestParam("uid") Long uid, @RequestParam("rid") Long rid,
+    public String addOrder(HttpServletRequest request, @RequestParam("rid") Long rid,
                            @RequestParam("num") int num, @RequestParam("pname1") String pname1,
                            @RequestParam("p1_tel") Long p1_tel, @RequestParam("pname2") String pname2,
                            @RequestParam("p2_tel") Long p2_tel) {
         Roomtype room = roomtypeService.queryRoomtype(rid);
         Msg msg = new Msg();
         msg.setResult("false");
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        Long uid = user.getUId();
         if (room.getSurplusroomnum() > 1) {
             Userorder userorder = new Userorder();
             userorder.setRId(room.getRId());

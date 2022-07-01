@@ -4,11 +4,13 @@ package com.code.back.controller;
 import com.code.back.mapper.HotelCourseVoMapper;
 import com.code.back.pojo.Hotel;
 import com.code.back.pojo.Msg;
+import com.code.back.service.HaddressService;
 import com.code.back.service.HotelService;
 import com.code.back.util.ControllerUtils;
 import com.code.back.util.jsonUtil;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -32,10 +34,15 @@ import java.util.Map;
 public class HotelController {
 
     @Autowired
+    @Qualifier("HotelServiceImpl")
     private HotelService hotelService;
 
     @Autowired
     private HotelCourseVoMapper hotelCourseVoMapper;
+
+    @Autowired
+    @Qualifier("HaddressServiceImpl")
+    private HaddressService haddressService;
 
     @RequestMapping(value = "/queryhotelbysome", produces = "application/json;charset=utf-8")
     public String queryHotelBySome(@RequestParam(value = "hname",defaultValue = "") String hname,
@@ -86,6 +93,46 @@ public class HotelController {
                               @RequestParam(value = "order_by", defaultValue = "avg_price")String orderBy){
         Msg msg = new Msg();
 
+        return jsonUtil.getJson(msg);
+    }
+
+    @RequestMapping(value = "/addhotel", produces = "application/json;charset=utf-8")
+    public String addHotel(@RequestParam("hname")String hname,@RequestParam("star_rating")float star,
+                           @RequestParam("overview")String overview,
+                           @RequestParam("address_line")String addressline,
+                           @RequestParam("country")String country,
+                           @RequestParam("state")String state,
+                           @RequestParam("city")String city) {
+        Msg msg = new Msg();
+        Long hid = hotelService.addHotel(hname, star, overview);
+        haddressService.addHaddress(hid,addressline,country,state,city);
+        msg.setResult("success");
+        return jsonUtil.getJson(msg);
+    }
+
+    @RequestMapping(value = "/changehotel", produces = "application/json;charset=utf-8")
+    public String changeHotel(@RequestParam("h_id")Long hid,
+                              @RequestParam("hname")String hname,@RequestParam("star_rating")float star,
+                              @RequestParam("overview")String overview,
+                              @RequestParam("address_line")String addressline,
+                              @RequestParam("country")String country,
+                              @RequestParam("state")String state,
+                              @RequestParam("city")String city){
+        Msg msg = new Msg();
+        msg.setResult("success");
+        hotelService.changeHotel(hid,hname,star,overview);
+        haddressService.changeHaddress(hid,addressline,country,state,city);
+        return jsonUtil.getJson(msg);
+    }
+
+    @RequestMapping(value = "/deletehotel", produces = "application/json;charset=utf-8")
+    public String deleteHotel(@RequestParam("h_id")Long hid){
+        Msg msg = new Msg();
+        msg.setResult("success");
+        int i = hotelService.deleteHotelByHid(hid);
+        if(i == 0){
+            msg.setResult("false");
+        }
         return jsonUtil.getJson(msg);
     }
 }

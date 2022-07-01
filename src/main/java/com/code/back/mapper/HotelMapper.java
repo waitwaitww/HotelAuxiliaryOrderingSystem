@@ -33,4 +33,5 @@ public interface HotelMapper extends BaseMapper<Hotel> {
 
     List<Hotel> qeuryHotelBydistence(@Param("distance")float distance);
 //    List<Hotel> queryAllInf();
+
 }

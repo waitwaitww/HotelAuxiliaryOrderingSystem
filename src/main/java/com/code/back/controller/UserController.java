@@ -190,5 +190,14 @@ public class UserController {
         return jsonUtil.getJson(msg);
     }
 
+    @RequestMapping(value = "/deleteuser",produces = "application/json;charset=utf-8")
+    public String deleteUser(@RequestParam("u_id") Long uid){
+        Msg msg = new Msg();
+        userService.deleteUserById(uid);
+        msg.setResult("success");
+        return jsonUtil.getJson(msg);
+    }
+
+
 }
 

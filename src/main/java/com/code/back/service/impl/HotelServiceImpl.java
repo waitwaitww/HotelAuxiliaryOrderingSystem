@@ -84,4 +84,26 @@ public class HotelServiceImpl extends ServiceImpl<HotelMapper, Hotel> implements
     public List<Hotel> queryHotelByDistance(float distance) {
         return hotelMapper.qeuryHotelBydistence(distance);
     }
+
+    @Override
+    public Long addHotel(String hname, float star, String overview) {
+        Hotel hotel = new Hotel();
+        hotel.setHname(hname);
+        hotel.setStarRating(star);
+        hotel.setOverview(overview);
+        hotelMapper.insert(hotel);
+        QueryWrapper<Hotel> wrapper = new QueryWrapper<>();
+        wrapper.eq("hname",hname);
+        Long h_id = hotelMapper.selectOne(wrapper).getHid();
+        return h_id;
+    }
+
+    @Override
+    public int changeHotel(Long hid, String hname, float star, String overview) {
+        Hotel hotel = hotelMapper.selectById(hid);
+        hotel.setOverview(overview);
+        hotel.setHname(hname);
+        hotel.setStarRating(star);
+        return hotelMapper.updateById(hotel);
+    }
 }

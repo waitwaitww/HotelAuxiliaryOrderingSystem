@@ -30,4 +30,27 @@ public class HaddressServiceImpl extends ServiceImpl<HaddressMapper, Haddress> i
         wrapper.eq("h_id",hid);
         return haddressMapper.selectOne(wrapper);
     }
+
+    @Override
+    public int addHaddress(Long hid,String addressLine, String country, String state, String city) {
+        Haddress haddress = new Haddress();
+        haddress.setAddressLine(addressLine);
+        haddress.setCity(city);
+        haddress.setCountry(country);
+        haddress.setState(state);
+        haddress.setHId(hid);
+        return haddressMapper.insert(haddress);
+    }
+
+    @Override
+    public int changeHaddress(Long hid, String addressline, String country, String state, String city) {
+        QueryWrapper<Haddress> wrapper = new QueryWrapper<>();
+        wrapper.eq("h_id",hid);
+        Haddress haddress = haddressMapper.selectOne(wrapper);
+        haddress.setAddressLine(addressline);
+        haddress.setCity(city);
+        haddress.setCountry(country);
+        haddress.setState(state);
+        return haddressMapper.updateById(haddress);
+    }
 }
