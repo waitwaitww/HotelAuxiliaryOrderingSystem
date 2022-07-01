@@ -21,4 +21,6 @@ public interface ReviewService extends IService<Review> {
 
     //获取某酒店评论数
     int qeuryReviewnum(Long hid);
+
+    int addnumber(Long hId,float rating);
 }

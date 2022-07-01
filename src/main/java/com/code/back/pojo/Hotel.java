@@ -69,5 +69,9 @@ public class Hotel implements Serializable {
     @TableLogic
     private Integer deleted;
 
+    private float priceAvg;
+
+    private float distance;
+
 
 }

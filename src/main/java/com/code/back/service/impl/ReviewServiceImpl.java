@@ -44,4 +44,12 @@ public class ReviewServiceImpl extends ServiceImpl<ReviewMapper, Review> impleme
         wrapper.eq("h_id", hid);
         return reviewMapper.selectOne(wrapper).getNumberOfReview();
     }
+
+    @Override
+    public int addnumber(Long hId,float rating) {
+        Review review = queryReviewByHid(hId);
+        float ra = (review.getRatingAvg()*review.getNumberOfReview()+rating);
+        review.setNumberOfReview(review.getNumberOfReview()+1);
+        return 0;
+    }
 }

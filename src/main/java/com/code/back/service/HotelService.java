@@ -32,4 +32,10 @@ public interface HotelService extends IService<Hotel> {
     List<Hotel> queryGtReviewsum(int review_num);
 
     List<Hotel> qeuryHotelBySome(Map<String, Object> some);
+
+    //根据距离查找
+    List<Hotel> queryHotelByDistance(float distance);
+
+    //按照筛选条件查询
+
 }

@@ -79,4 +79,9 @@ public class HotelServiceImpl extends ServiceImpl<HotelMapper, Hotel> implements
         //        if (hotels.size() > 0)
         return hotels;
     }
+
+    @Override
+    public List<Hotel> queryHotelByDistance(float distance) {
+        return hotelMapper.qeuryHotelBydistence(distance);
+    }
 }

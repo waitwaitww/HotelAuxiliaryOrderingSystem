@@ -7,6 +7,8 @@
         <result column="hname" property="hname"/>
         <result column="overview" property="overview"/>
         <result column="star_rating" property="starRating"/>
+        <result column="price_avg" property="priceAvg"/>
+        <result column="distance" property="distance"/>
     </resultMap>
 
     <resultMap id="AllInfo" type="com.code.back.pojo.Hotel" extends="BaseResertMap">
@@ -38,27 +40,174 @@
     </resultMap>
 
     <select id="queryHotelBySome1" resultMap="AllInfo">
-            select re.h_id,h.hname hname, star_rating,overview,number_of_review, rating_avg,check_in,check_out, rates_from,city,state,country,longitude,latitude,city_no,country_no,roomnum,url,address_line
+            select
+            ROUND(
+            6378.138 * 2 * ASIN(
+            SQRT(
+            POW(
+            SIN(
+            (
+            30.779* PI() / 180 - latitude * PI() / 180
+            ) / 2
+            ),
+            2
+            ) + COS(30.779* PI() / 180) * COS(
+            latitude * PI() / 180
+            ) * POW(
+            SIN(
+            (
+            103.85* PI() / 180 - longitude * PI() / 180
+            ) / 2
+            ),
+            2
+            )
+            )
+            ) * 1000
+            ) AS distance,re.h_id,h.hname hname, star_rating,overview,number_of_review, rating_avg,check_in,check_out, rates_from,city,state,country,longitude,latitude,city_no,country_no,roomnum,url,address_line,price_avg
             from haos.hotel h, haos.hphoto hph, haos.review re,haos.roomsum rsm, haos.hcheck hch,haos.haddress had
             where hname like #{hname} and star_rating>=#{star_rating} and h.h_id in (select h_id from haos.roomsum where roomnum >0)
             and h.h_id = hph.h_id and h.h_id = re.h_id and h.h_id = rsm.h_id and h.h_id = hch.h_id and h.h_id = had.h_id
     </select>
     <select id="queryHotelBySome2" resultMap="AllInfo">
-            select h.h_id,h.hname hname, star_rating,overview,number_of_review, rating_avg,check_in,check_out, rates_from,city,state,country,longitude,latitude,city_no,country_no,roomnum,url,address_line
+            select
+            ROUND(
+            6378.138 * 2 * ASIN(
+            SQRT(
+            POW(
+            SIN(
+            (
+            30.779* PI() / 180 - latitude * PI() / 180
+            ) / 2
+            ),
+            2
+            ) + COS(30.779* PI() / 180) * COS(
+            latitude * PI() / 180
+            ) * POW(
+            SIN(
+            (
+            103.85* PI() / 180 - longitude * PI() / 180
+            ) / 2
+            ),
+            2
+            )
+            )
+            ) * 1000
+            ) AS distance,re.h_id,h.hname hname, star_rating,overview,number_of_review, rating_avg,check_in,check_out, rates_from,city,state,country,longitude,latitude,city_no,country_no,roomnum,url,address_line,price_avg
             from haos.hotel h, haos.hphoto hph, haos.review re,haos.roomsum rsm, haos.hcheck hch,haos.haddress had
             where hname like #{hname} and star_rating&lt;=#{star_rating} and h.h_id in (select h_id from haos.roomsum where roomnum >0)
             and h.h_id = hph.h_id and h.h_id = re.h_id and h.h_id = rsm.h_id and h.h_id = hch.h_id and h.h_id = had.h_id
 
     </select>
     <select id="queryAllInforByHid" resultMap="AllInfo">
-            select h.h_id, h.hname hname, star_rating,overview,number_of_review, rating_avg,check_in,check_out, rates_from,city,state,country,longitude,latitude,city_no,country_no,roomnum,url,address_line
+            select
+            ROUND(
+            6378.138 * 2 * ASIN(
+            SQRT(
+            POW(
+            SIN(
+            (
+            30.779* PI() / 180 - latitude * PI() / 180
+            ) / 2
+            ),
+            2
+            ) + COS(30.779* PI() / 180) * COS(
+            latitude * PI() / 180
+            ) * POW(
+            SIN(
+            (
+            103.85* PI() / 180 - longitude * PI() / 180
+            ) / 2
+            ),
+            2
+            )
+            )
+            ) * 1000
+            ) AS distance,re.h_id,h.hname hname, star_rating,overview,number_of_review, rating_avg,check_in,check_out, rates_from,city,state,country,longitude,latitude,city_no,country_no,roomnum,url,address_line,price_avg
             from haos.hotel h, haos.hphoto hph, haos.review re,haos.roomsum rsm, haos.hcheck hch,haos.haddress had
             where  h.h_id = #{h_id}
             and h.h_id = hph.h_id and h.h_id = re.h_id and h.h_id = rsm.h_id and h.h_id = hch.h_id and h.h_id = had.h_id
     </select>
     <select id="queryAllHotel" resultMap="AllInfo">
-            select h.h_id, h.hname hname, star_rating,overview,number_of_review, rating_avg,check_in,check_out, rates_from,city,state,country,longitude,latitude,city_no,country_no,roomnum,url,address_line
+            select
+            ROUND(
+            6378.138 * 2 * ASIN(
+            SQRT(
+            POW(
+            SIN(
+            (
+            30.779* PI() / 180 - latitude * PI() / 180
+            ) / 2
+            ),
+            2
+            ) + COS(30.779* PI() / 180) * COS(
+            latitude * PI() / 180
+            ) * POW(
+            SIN(
+            (
+            103.85* PI() / 180 - longitude * PI() / 180
+            ) / 2
+            ),
+            2
+            )
+            )
+            ) * 1000
+            ) AS distance,re.h_id,h.hname hname, star_rating,overview,number_of_review, rating_avg,check_in,check_out, rates_from,city,state,country,longitude,latitude,city_no,country_no,roomnum,url,address_line,price_avg
             from haos.hotel h, haos.hphoto hph, haos.review re,haos.roomsum rsm, haos.hcheck hch,haos.haddress had
             where  h.h_id = hph.h_id and h.h_id = re.h_id and h.h_id = rsm.h_id and h.h_id = hch.h_id and h.h_id = had.h_id
     </select>
+    <select id="qeuryHotelBydistence" resultMap="AllInfo">
+        SELECT
+        ROUND(
+        6378.138 * 2 * ASIN(
+        SQRT(
+        POW(
+        SIN(
+        (
+        30.779* PI() / 180 - latitude * PI() / 180
+        ) / 2
+        ),
+        2
+        ) + COS(30.779* PI() / 180) * COS(
+        latitude * PI() / 180
+        ) * POW(
+        SIN(
+        (
+        103.85* PI() / 180 - longitude * PI() / 180
+        ) / 2
+        ),
+        2
+        )
+        )
+        ) * 1000
+        ) AS distance,h.h_id, h.hname hname, star_rating,overview,number_of_review, rating_avg,check_in,check_out, rates_from,city,state,country,longitude,latitude,city_no,country_no,roomnum,url,address_line,price_avg
+        FROM
+        haos.hotel h, haos.hphoto hph, haos.review re,haos.roomsum rsm, haos.hcheck hch,haos.haddress had
+        WHERE
+        ROUND(
+        6378.138 * 2 * ASIN(
+        SQRT(
+        POW(
+        SIN(
+        (
+        30.779* PI() / 180 - latitude * PI() / 180
+        ) / 2
+        ),
+        2
+        ) + COS(30.779* PI() / 180) * COS(
+        latitude * PI() / 180
+        ) * POW(
+        SIN(
+        (
+        103.85* PI() / 180 - longitude * PI() / 180
+        ) / 2
+        ),
+        2
+        )
+        )
+        ) * 1000
+        )  &lt;#{distance} and h.h_id = hph.h_id and h.h_id = re.h_id and h.h_id = rsm.h_id and h.h_id = hch.h_id and h.h_id = had.h_id
+        ORDER BY distance
+    </select>
+
+
 </mapper>

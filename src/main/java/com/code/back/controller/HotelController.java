@@ -38,9 +38,9 @@ public class HotelController {
     private HotelCourseVoMapper hotelCourseVoMapper;
 
     @RequestMapping(value = "/queryhotelbysome", produces = "application/json;charset=utf-8")
-    public String queryHotelBySome(@RequestParam("hname") String hname,
-                                   @RequestParam("rating") String star,
-                                   @RequestParam("keyword") String keyWord){
+    public String queryHotelBySome(@RequestParam(value = "hname",defaultValue = "") String hname,
+                                   @RequestParam(value = "rating",defaultValue = "选项2") String star,
+                                   @RequestParam(value = "keyword",defaultValue = "") String keyWord){
 
         float starrating = ControllerUtils.starConversion(star);
         System.out.println(hname);
@@ -67,6 +67,25 @@ public class HotelController {
         Msg msg = new Msg();
         List<Hotel> hotels = hotelService.queryAllHotel();
         msg.setResult(hotels);
+        return jsonUtil.getJson(msg);
+    }
+
+    @RequestMapping(value = "/queryhotelbydistance", produces = "application/json;charset=utf-8")
+    public String queryHotelByDistance(@RequestParam("distance")float distance){
+        Msg msg = new Msg();
+        List<Hotel> hotels = hotelService.queryHotelByDistance(distance);
+        msg.setResult(hotels);
+        return jsonUtil.getJson(msg);
+    }
+
+    @RequestMapping(value = "/screenhotel", produces = "application/json;charset=utf-8")
+    public String screenHotel(@RequestParam(value = "star_rating" ,defaultValue = "3")float star,
+                              @RequestParam(value = "rating_avg" ,defaultValue = "7") float rating,
+                              @RequestParam(value = "number_of_review" ,defaultValue ="50")int numreview,
+                              @RequestParam(value = "rtname" ,defaultValue = "")String rtname,
+                              @RequestParam(value = "order_by", defaultValue = "avg_price")String orderBy){
+        Msg msg = new Msg();
+
         return jsonUtil.getJson(msg);
     }
 }
