@@ -1,9 +1,7 @@
 package com.code.back.pojo;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.Version;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -72,6 +70,9 @@ public class Hotel implements Serializable {
     private float priceAvg;
 
     private float distance;
+
+    @TableField(exist = false)
+    private List<Roomtype> roomtypes;
 
 
 }

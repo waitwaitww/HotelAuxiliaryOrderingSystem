@@ -4,14 +4,14 @@ package com.code.back.controller;
 import com.code.back.mapper.HotelCourseVoMapper;
 import com.code.back.pojo.Hotel;
 import com.code.back.pojo.Msg;
+import com.code.back.pojo.Roomtype;
 import com.code.back.service.HaddressService;
 import com.code.back.service.HotelService;
+import com.code.back.service.RoomtypeService;
 import com.code.back.util.ControllerUtils;
 import com.code.back.util.jsonUtil;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,6 +43,10 @@ public class HotelController {
     private HotelCourseVoMapper hotelCourseVoMapper;
 
     @Autowired
+    @Qualifier("RoomtypeServiceImpl")
+    private RoomtypeService roomtypeService;
+
+    @Autowired
     @Qualifier("HaddressServiceImpl")
     private HaddressService haddressService;
 
@@ -69,10 +73,11 @@ public class HotelController {
     }
 
     @RequestMapping(value = "/viewdetails", produces = "application/json;charset=utf-8")
-    public String hotelAllInfo(@Param("h_id") Long hid){
+    public String hotelAllInfo(@RequestParam("h_id") Long hid){
         Msg msg = new Msg();
-        msg.setResult("false");
         Hotel hotel = hotelService.queryHotelByhid(hid);
+        List<Roomtype> roomtypes = roomtypeService.queryAllRoomtypeByHid(hid);
+        hotel.setRoomtypes(roomtypes);
         msg.setResult(hotel);
         return jsonUtil.getJson(msg);
     }
