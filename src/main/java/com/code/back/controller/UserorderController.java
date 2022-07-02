@@ -5,6 +5,7 @@ import com.code.back.Vo.UserorderVo;
 import com.code.back.config.AlipayConfig;
 import com.code.back.pojo.*;
 import com.code.back.service.*;
+import com.code.back.util.ControllerUtils;
 import com.code.back.util.jsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -67,7 +68,7 @@ public class UserorderController {
 
     @RequestMapping(value = "/addorder", produces = "application/json;charset=utf-8")
     public String addOrder(HttpServletRequest request, @RequestParam("rid") Long rid,
-                           @RequestParam("num") int num, @RequestParam("pname1") String pname1,
+                           @RequestParam("num") String  num, @RequestParam("pname1") String pname1,
                            @RequestParam("p1_tel") Long p1_tel, @RequestParam(value = "pname2",defaultValue = "") String pname2,
                            @RequestParam(value="p2_tel",defaultValue = "") Long p2_tel) {
         Roomtype room = roomtypeService.queryRoomtype(rid);
@@ -75,12 +76,13 @@ public class UserorderController {
         msg.setResult("false");
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
+        int rnum = ControllerUtils.setnum(num);
         Long uid = user.getUId();
         if (room.getSurplusroomnum() > 1) {
             Userorder userorder = new Userorder();
             userorder.setRId(room.getRId());
             userorder.setUId(uid);
-            userorder.setTotalPrice(room.getRprice() * num);
+            userorder.setTotalPrice(room.getRprice() * rnum);
             userorder.setPname1(pname1);
             userorder.setPname2(pname2);
             userorder.setP1Tel(p1_tel);

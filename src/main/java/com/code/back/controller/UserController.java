@@ -208,6 +208,15 @@ public class UserController {
         return jsonUtil.getJson(msg);
     }
 
+    @RequestMapping(value = "/queryinfo",produces = "application/json;charset=utf-8")
+    public String queryInfo(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        Msg msg = new Msg();
+        msg.setResult(user);
+        return jsonUtil.getJson(msg);
+    }
+
 
 }
 
