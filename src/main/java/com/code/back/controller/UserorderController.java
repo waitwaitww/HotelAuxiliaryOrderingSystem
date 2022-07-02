@@ -68,8 +68,8 @@ public class UserorderController {
     @RequestMapping(value = "/addorder", produces = "application/json;charset=utf-8")
     public String addOrder(HttpServletRequest request, @RequestParam("rid") Long rid,
                            @RequestParam("num") int num, @RequestParam("pname1") String pname1,
-                           @RequestParam("p1_tel") Long p1_tel, @RequestParam("pname2") String pname2,
-                           @RequestParam("p2_tel") Long p2_tel) {
+                           @RequestParam("p1_tel") Long p1_tel, @RequestParam(value = "pname2",defaultValue = "") String pname2,
+                           @RequestParam(value="p2_tel",defaultValue = "") Long p2_tel) {
         Roomtype room = roomtypeService.queryRoomtype(rid);
         Msg msg = new Msg();
         msg.setResult("false");
