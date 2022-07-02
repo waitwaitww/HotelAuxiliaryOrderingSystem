@@ -44,4 +44,6 @@ public interface HotelService extends IService<Hotel> {
 
     //更改酒店信息
     int changeHotel(Long hid,String hname,float star,String overview);
+
+    List<Hotel> screenHotel(String hanme,float star, float rating, int numreview, String rtname, String orderBy);
 }

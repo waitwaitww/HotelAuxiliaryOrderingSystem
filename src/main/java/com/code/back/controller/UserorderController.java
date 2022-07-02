@@ -96,7 +96,10 @@ public class UserorderController {
     }
 
     @RequestMapping(value = "/queryallorderforsb", produces = "application/json;charset=utf-8")
-    public String queryAllOrderForSb(@RequestParam("u_id") Long uid) {
+    public String queryAllOrderForSb(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        User user1 = (User) session.getAttribute("user");
+        Long uid = user1.getUId();
         int user = userService.isUserExistByUid(uid);
         Msg msg = new Msg();
         msg.setResult("用户不存在！");
@@ -108,7 +111,10 @@ public class UserorderController {
     }
 
     @RequestMapping(value = "/querystateorderforsb", produces = "application/json;charset=utf-8")
-    public String queryStateOrderForSb(@RequestParam("u_id") Long uid, @RequestParam("state") int state) {
+    public String queryStateOrderForSb(@RequestParam("state") int state,HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        User user1 = (User) session.getAttribute("user");
+        Long uid = user1.getUId();
         int user = userService.isUserExistByUid(uid);
         Msg msg = new Msg();
         msg.setResult("用户不存在！");

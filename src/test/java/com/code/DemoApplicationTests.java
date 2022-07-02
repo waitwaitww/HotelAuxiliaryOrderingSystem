@@ -25,7 +25,7 @@ class DemoApplicationTests {
 
     @Test
     void contextLoads() {
-        List<Hotel> hotels = hotelMapper.qeuryHotelBydistence(20000);
+        List<Hotel> hotels = hotelMapper.screenHotel("%成都世纪城%",4,6,50,"fasdf","distance");
         hotels.forEach(System.out::println);
     }
 

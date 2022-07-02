@@ -208,6 +208,69 @@
         )  &lt;#{distance} and h.h_id = hph.h_id and h.h_id = re.h_id and h.h_id = rsm.h_id and h.h_id = hch.h_id and h.h_id = had.h_id
         ORDER BY distance
     </select>
+    <select id="screenHotel" resultMap="AllInfo">
+        SELECT
+        ROUND(
+        6378.138 * 2 * ASIN(
+        SQRT(
+        POW(
+        SIN(
+        (
+        30.779* PI() / 180 - latitude * PI() / 180
+        ) / 2
+        ),
+        2
+        ) + COS(30.779* PI() / 180) * COS(
+        latitude * PI() / 180
+        ) * POW(
+        SIN(
+        (
+        103.85* PI() / 180 - longitude * PI() / 180
+        ) / 2
+        ),
+        2
+        )
+        )
+        ) * 1000
+        ) AS distance,h.h_id, h.hname hname, star_rating,overview,number_of_review, rating_avg,check_in,check_out, rates_from,city,state,country,longitude,latitude,city_no,country_no,roomnum,url,address_line,price_avg
+        FROM
+        haos.hotel h, haos.hphoto hph, haos.review re,haos.roomsum rsm, haos.hcheck hch,haos.haddress had
+        WHERE hname like #{hname} and star_rating>=#{star} and h.h_id in (select h_id from haos.roomsum where roomnum >0) and re.number_of_review > #{numreview} and rating_avg > #{rating}
+        and h.h_id = hph.h_id and h.h_id = re.h_id and h.h_id = rsm.h_id and h.h_id = hch.h_id and h.h_id = had.h_id
+        ORDER BY #{orderBy}
+    </select>
+
+    <select id="screenHotel1" resultMap="AllInfo">
+        SELECT
+        ROUND(
+        6378.138 * 2 * ASIN(
+        SQRT(
+        POW(
+        SIN(
+        (
+        30.779* PI() / 180 - latitude * PI() / 180
+        ) / 2
+        ),
+        2
+        ) + COS(30.779* PI() / 180) * COS(
+        latitude * PI() / 180
+        ) * POW(
+        SIN(
+        (
+        103.85* PI() / 180 - longitude * PI() / 180
+        ) / 2
+        ),
+        2
+        )
+        )
+        ) * 1000
+        ) AS distance,h.h_id, h.hname hname, star_rating,overview,number_of_review, rating_avg,check_in,check_out, rates_from,city,state,country,longitude,latitude,city_no,country_no,roomnum,url,address_line,price_avg
+        FROM
+        haos.hotel h, haos.hphoto hph, haos.review re,haos.roomsum rsm, haos.hcheck hch,haos.haddress had
+        WHERE hname like #{hname} and star_rating&lt;=#{star} and h.h_id in (select h_id from haos.roomsum where roomnum >0) and re.number_of_review > #{numreview} and rating_avg > #{rating}
+        and h.h_id = hph.h_id and h.h_id = re.h_id and h.h_id = rsm.h_id and h.h_id = hch.h_id and h.h_id = had.h_id
+        ORDER BY #{orderBy}
+    </select>
 
 
 </mapper>

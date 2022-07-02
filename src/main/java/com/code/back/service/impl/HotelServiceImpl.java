@@ -49,7 +49,7 @@ public class HotelServiceImpl extends ServiceImpl<HotelMapper, Hotel> implements
     @Override
     public List<Hotel> queryGtstar(float star) {
         QueryWrapper<Hotel> wrapper = new QueryWrapper<>();
-        wrapper.gt("star_rating",star);
+        wrapper.gt("star_rating", star);
         return hotelMapper.selectList(wrapper);
     }
 
@@ -69,10 +69,9 @@ public class HotelServiceImpl extends ServiceImpl<HotelMapper, Hotel> implements
         float star_rating = (float) some.get("star_rating");
         String keyWord = (String) some.get("keyword");
         List<Hotel> hotels = new ArrayList<>();
-        if(star_rating >3.0){
-            hotels= hotelMapper.queryHotelBySome1("%" + hname + "%", star_rating, keyWord);
-        }
-        else{
+        if (star_rating > 3.0) {
+            hotels = hotelMapper.queryHotelBySome1("%" + hname + "%", star_rating, keyWord);
+        } else {
             hotels = hotelMapper.queryHotelBySome2("%" + hname + "%", star_rating, keyWord);
         }
 
@@ -93,7 +92,7 @@ public class HotelServiceImpl extends ServiceImpl<HotelMapper, Hotel> implements
         hotel.setOverview(overview);
         hotelMapper.insert(hotel);
         QueryWrapper<Hotel> wrapper = new QueryWrapper<>();
-        wrapper.eq("hname",hname);
+        wrapper.eq("hname", hname);
         Long h_id = hotelMapper.selectOne(wrapper).getHid();
         return h_id;
     }
@@ -105,5 +104,15 @@ public class HotelServiceImpl extends ServiceImpl<HotelMapper, Hotel> implements
         hotel.setHname(hname);
         hotel.setStarRating(star);
         return hotelMapper.updateById(hotel);
+    }
+
+    @Override
+    public List<Hotel> screenHotel(String hname, float star, float rating, int numreview, String rtname, String orderBy) {
+        if (star > 3) {
+            return hotelMapper.screenHotel("%" + hname + "%", star, rating, numreview, rtname, orderBy);
+        }
+        else {
+            return hotelMapper.screenHotel1("%" + hname + "%", star, rating, numreview, rtname, orderBy);
+        }
     }
 }

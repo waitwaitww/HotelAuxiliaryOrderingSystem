@@ -1,6 +1,7 @@
 package com.code.back.controller;
 
 
+import cn.hutool.http.server.HttpServerRequest;
 import com.code.back.pojo.Code;
 import com.code.back.pojo.Msg;
 import com.code.back.pojo.User;
@@ -130,7 +131,10 @@ public class UserController {
     }
 
     @RequestMapping(value = "/changePwd", produces = "application/json;charset=utf-8")
-    public String changePwd(@RequestParam("uid") Long uid,@RequestParam("upassword") String upassword,@RequestParam("newpassword") String newpassword){
+    public String changePwd(@RequestParam("upassword") String upassword,@RequestParam("newpassword") String newpassword,HttpServletRequest request){
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        Long uid = user.getUId();
         int exist = userService.isUserExistByUid(uid);
         Msg msg = new Msg();
         if(exist == 0){
@@ -141,6 +145,8 @@ public class UserController {
         if(upassword.equals(oldpassword)){
             userService.updataUpassword(uid,newpassword);
             msg.setResult("success");
+            user.setUpassword(newpassword);
+            session.setAttribute("user",user);
             return jsonUtil.getJson(msg);
         }
         msg.setResult("用户密码输入错误");
@@ -149,11 +155,13 @@ public class UserController {
 
 
     @RequestMapping(value = "/modifinfo", produces = "application/json;charset=utf-8")
-    public String modifyInfo(@RequestParam("u_id") Long uid,@RequestParam("uname") String uname,@RequestParam("age") int age,
-                             @RequestParam("sex")int sex,@RequestParam("userdescribe") String userdescribe){
+    public String modifyInfo(@RequestParam("uname") String uname, @RequestParam("age") int age,
+                             @RequestParam("sex")int sex, @RequestParam("userdescribe") String userdescribe,
+                             HttpServletRequest request){
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
         Msg msg = new Msg();
         msg.setResult("false");
-        User user = userService.queryUserById(uid);
         user.setSex(sex);
         user.setAge(age);
         user.setUserdescribe(userdescribe);
@@ -161,6 +169,8 @@ public class UserController {
         int i = userService.updataUser(user);
         if(i == 1) {
             msg.setResult("success");
+            session.setAttribute("user",user);
+
         }
         return jsonUtil.getJson(msg);
     }

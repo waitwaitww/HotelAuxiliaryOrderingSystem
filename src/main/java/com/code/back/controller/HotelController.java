@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,9 +49,12 @@ public class HotelController {
     @RequestMapping(value = "/queryhotelbysome", produces = "application/json;charset=utf-8")
     public String queryHotelBySome(@RequestParam(value = "hname",defaultValue = "") String hname,
                                    @RequestParam(value = "rating",defaultValue = "选项2") String star,
-                                   @RequestParam(value = "keyword",defaultValue = "") String keyWord){
+                                   @RequestParam(value = "keyword",defaultValue = "") String keyWord,
+                                   HttpServletRequest request){
 
         float starrating = ControllerUtils.starConversion(star);
+        HttpSession session = request.getSession();
+        session.setAttribute("hname",hname);
         System.out.println(hname);
         System.out.println(keyWord);
         System.out.println(starrating);
@@ -63,10 +68,13 @@ public class HotelController {
         return jsonUtil.getJson(msg);
     }
 
-    @RequestMapping(value = "/hotelAllInfo", produces = "application/json;charset=utf-8")
-    public String hotelAllInfo(@Param("hid") Long hid){
-        return jsonUtil.getJson(hotelService.queryHotelByhid(hid));
-//        return jsonUtil.getJson(hotelCourseVoMapper.queryAllInfoByHid(hid));
+    @RequestMapping(value = "/viewdetails", produces = "application/json;charset=utf-8")
+    public String hotelAllInfo(@Param("h_id") Long hid){
+        Msg msg = new Msg();
+        msg.setResult("false");
+        Hotel hotel = hotelService.queryHotelByhid(hid);
+        msg.setResult(hotel);
+        return jsonUtil.getJson(msg);
     }
 
     @RequestMapping(value = "/queryallhotel", produces = "application/json;charset=utf-8")
@@ -86,13 +94,18 @@ public class HotelController {
     }
 
     @RequestMapping(value = "/screenhotel", produces = "application/json;charset=utf-8")
-    public String screenHotel(@RequestParam(value = "star_rating" ,defaultValue = "3")float star,
+    public String screenHotel(@RequestParam(value = "star_rating" ,defaultValue = "3")String  star,
                               @RequestParam(value = "rating_avg" ,defaultValue = "7") float rating,
                               @RequestParam(value = "number_of_review" ,defaultValue ="50")int numreview,
                               @RequestParam(value = "rtname" ,defaultValue = "")String rtname,
-                              @RequestParam(value = "order_by", defaultValue = "avg_price")String orderBy){
+                              @RequestParam(value = "order_by", defaultValue = "avg_price")String orderBy,
+                              HttpServletRequest request){
         Msg msg = new Msg();
-
+        HttpSession session = request.getSession();
+        String  hname = (String) session.getAttribute("hname");
+        float st = ControllerUtils.starConversion(star);
+        List<Hotel> hotels = hotelService.screenHotel(hname, st, rating, numreview, rtname, orderBy);
+        msg.setResult(hotels);
         return jsonUtil.getJson(msg);
     }
 
