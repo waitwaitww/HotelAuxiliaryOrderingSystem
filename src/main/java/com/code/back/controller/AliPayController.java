@@ -112,7 +112,7 @@ public class AliPayController {
                 System.out.println("买家付款金额: " + params.get("buyer_pay_amount"));
 
                 // 更新订单未已支付
-                int i = userorderService.updateSuccessPay(Long.valueOf(tradeNo), payTime,alipayTradeNo);
+                int i = userorderService.updateSuccessPay(tradeNo, payTime,alipayTradeNo);
             }
         }
         Msg msg = new Msg();

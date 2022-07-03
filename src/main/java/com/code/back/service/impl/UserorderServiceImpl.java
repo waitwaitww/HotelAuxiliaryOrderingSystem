@@ -53,7 +53,7 @@ public class UserorderServiceImpl extends ServiceImpl<UserorderMapper, Userorder
     }
 
     @Override
-    public int updateSuccessPay(Long oid, Date payTime,String alipayNo) {
+    public int updateSuccessPay(String oid, Date payTime,String alipayNo) {
         Userorder userorder = userorderMapper.selectById(oid);
         userorder.setPayTime(payTime);
         userorder.setState(1);
@@ -63,12 +63,12 @@ public class UserorderServiceImpl extends ServiceImpl<UserorderMapper, Userorder
 
 
     @Override
-    public UserorderVo queryUserorderById(Long oid) {
+    public UserorderVo queryUserorderById(String oid) {
         return userorderVoMapper.queryUserorderByOid(oid);
     }
 
     @Override
-    public int updateUserorderProgress(Long oid) {
+    public int updateUserorderProgress(String oid) {
         QueryWrapper<Userorder> wrapper = new QueryWrapper<>();
         wrapper.eq("o_id",oid);
         Userorder o1 = userorderMapper.selectById(wrapper);
@@ -84,7 +84,7 @@ public class UserorderServiceImpl extends ServiceImpl<UserorderMapper, Userorder
     }
 
     @Override
-    public int deleteUserorderById(Long oid) {
+    public int deleteUserorderById(String oid) {
         return userorderMapper.deleteById(oid);
     }
 
@@ -94,7 +94,7 @@ public class UserorderServiceImpl extends ServiceImpl<UserorderMapper, Userorder
     }
 
     @Override
-    public int updateCheckInOrder(Long oid) {
+    public int updateCheckInOrder(String oid) {
         Userorder userorder = userorderMapper.selectById(oid);
         String now = DateUtil.now();
         userorder.setCheckinTime(DateUtil.parseDateTime(now));
@@ -103,7 +103,7 @@ public class UserorderServiceImpl extends ServiceImpl<UserorderMapper, Userorder
     }
 
     @Override
-    public int updateCheckOutOrder(Long oid) {
+    public int updateCheckOutOrder(String oid) {
         Userorder userorder = userorderMapper.selectById(oid);
         String now = DateUtil.now();
         userorder.setCheckoutTime(DateUtil.parseDateTime(now));
@@ -112,7 +112,7 @@ public class UserorderServiceImpl extends ServiceImpl<UserorderMapper, Userorder
     }
 
     @Override
-    public int comment(Long oid, float rating, String review) {
+    public int comment(String oid, float rating, String review) {
         Userorder userorder = userorderMapper.selectById(oid);
         userorder.setRating(rating);
         userorder.setReview(review);
@@ -120,7 +120,7 @@ public class UserorderServiceImpl extends ServiceImpl<UserorderMapper, Userorder
     }
 
     @Override
-    public Userorder quserOrederByOid(Long oid) {
+    public Userorder quserOrederByOid(String  oid) {
         return userorderMapper.selectById(oid);
     }
 

@@ -13,5 +13,5 @@ public interface UserorderVoMapper extends BaseMapper<UserorderVo> {
 
     public List<UserorderVo> queryAllStateOrderById(Long uid,int state);
 
-    public UserorderVo queryUserorderByOid(Long oid);
+    public UserorderVo queryUserorderByOid(String  oid);
 }

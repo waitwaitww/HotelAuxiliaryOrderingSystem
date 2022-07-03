@@ -34,8 +34,8 @@ public class Userorder implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "o_id", type = IdType.ID_WORKER)
-    private Long oId;
+    @TableId(value = "o_id", type = IdType.UUID)
+    private String oId;
 
     private Long uId;
 

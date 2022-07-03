@@ -30,7 +30,7 @@ public interface RoomtypeService extends IService<Roomtype> {
     int deleteRoomtypeByRid(Long rid);
 
     //查询某一房型信息
-    Roomtype queryRoomtype(Long rid);
+    Roomtype queryRoomtype(Long  rid);
 
     //某房型数量减一
     int reduceRoomtypeByRid(Long rid);

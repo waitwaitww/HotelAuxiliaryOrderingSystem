@@ -130,6 +130,19 @@ public class UserController {
         return jsonUtil.getJson(msg);
     }
 
+    @RequestMapping(value = "resetpwd", produces="application/json;charset=utf-8")
+    public String resetPwd(@RequestParam("email") String email,@RequestParam("upassword")String upassword){
+        Msg msg = new Msg();
+        User user = userService.queryAllInfoByEmail(email);
+        user.setUpassword(upassword);
+        int i = userService.updataUser(user);
+        msg.setResult("success");
+        if(i==0){
+            msg.setResult("false");
+        }
+        return jsonUtil.getJson(msg);
+    }
+
     @RequestMapping(value = "/changePwd", produces = "application/json;charset=utf-8")
     public String changePwd(@RequestParam("upassword") String upassword,@RequestParam("newpassword") String newpassword,HttpServletRequest request){
         HttpSession session = request.getSession();
@@ -155,11 +168,19 @@ public class UserController {
 
 
     @RequestMapping(value = "/modifinfo", produces = "application/json;charset=utf-8")
-    public String modifyInfo(@RequestParam("uname") String uname, @RequestParam("age") int age,
-                             @RequestParam("sex")int sex, @RequestParam("userdescribe") String userdescribe,
+    public String modifyInfo(@RequestParam(value = "uname") String uname, @RequestParam(value = "age",defaultValue = "-100") int age,
+                             @RequestParam(value = "sex",defaultValue = "-199")int sex, @RequestParam("userdescribe") String userdescribe,
                              HttpServletRequest request){
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
+        if(uname == null){
+            uname = user.getUname();
+        }
+        if(age == -100){
+            age = user.getAge();
+        }
+        if(sex == -199) sex = user.getSex();
+        if(userdescribe == null)    userdescribe = user.getUserdescribe();
         Msg msg = new Msg();
         msg.setResult("false");
         user.setSex(sex);

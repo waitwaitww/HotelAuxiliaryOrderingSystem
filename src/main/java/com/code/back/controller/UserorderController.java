@@ -74,10 +74,11 @@ public class UserorderController {
         Roomtype room = roomtypeService.queryRoomtype(rid);
         Msg msg = new Msg();
         msg.setResult("false");
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
+//        HttpSession session = request.getSession();
+//        User user = (User) session.getAttribute("user");
         int rnum = ControllerUtils.setnum(num);
-        Long uid = user.getUId();
+        Long uid = 1541968756951871489L;
+//        Long uid = user.getUId();
         if (room.getSurplusroomnum() > 1) {
             Userorder userorder = new Userorder();
             userorder.setRId(room.getRId());
@@ -99,9 +100,10 @@ public class UserorderController {
 
     @RequestMapping(value = "/queryallorderforsb", produces = "application/json;charset=utf-8")
     public String queryAllOrderForSb(HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        User user1 = (User) session.getAttribute("user");
-        Long uid = user1.getUId();
+//        HttpSession session = request.getSession();
+//        User user1 = (User) session.getAttribute("user");
+//        Long uid = user1.getUId();
+        Long uid = 1541968756951871489L;
         int user = userService.isUserExistByUid(uid);
         Msg msg = new Msg();
         msg.setResult("用户不存在！");
@@ -128,7 +130,7 @@ public class UserorderController {
     }
 
     @RequestMapping(value = "/checkin", produces = "application/json;charset=utf-8")
-    public String checkIn(@RequestParam("o_id") Long oid) {
+    public String checkIn(@RequestParam("o_id") String  oid) {
         Msg msg = new Msg();
         msg.setResult("success");
         int i = userorderService.updateCheckInOrder(oid);
@@ -139,7 +141,7 @@ public class UserorderController {
     }
 
     @RequestMapping(value = "/checkout", produces = "application/json;charset=utf-8")
-    public String checkOut(@RequestParam("o_id") Long oid) {
+    public String checkOut(@RequestParam("o_id") String oid) {
         Msg msg = new Msg();
         msg.setResult("success");
         int i = userorderService.updateCheckOutOrder(oid);
@@ -154,7 +156,7 @@ public class UserorderController {
     }
 
     @RequestMapping(value = "/comment", produces = "application/json;charset=utf-8")
-    public String comment(@RequestParam("o_id") Long oid, @RequestParam("rating") float rating, @RequestParam("review") String review) {
+    public String comment(@RequestParam("o_id") String oid, @RequestParam("rating") float rating, @RequestParam("review") String review) {
         Msg msg = new Msg();
         msg.setResult("success");
         Userorder userorder = userorderService.quserOrederByOid(oid);
@@ -168,7 +170,7 @@ public class UserorderController {
     }
 
     @RequestMapping(value = "/cancellationorder", produces = "application/json;charset=utf-8")
-    public String cancellationOrder(@RequestParam("o_id") Long oid, AliPay aliPay) {
+    public String cancellationOrder(@RequestParam("o_id") String oid, AliPay aliPay) {
         Msg msg = new Msg();
         msg.setResult("success");
         Userorder userorder = userorderService.quserOrederByOid(oid);

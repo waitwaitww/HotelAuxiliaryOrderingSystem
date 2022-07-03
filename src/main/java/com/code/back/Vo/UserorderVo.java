@@ -20,7 +20,7 @@ public class UserorderVo {
 
     private Long id;
 
-    private Long oid;
+    private String  oid;
 
     private Date createTime;
 
