@@ -74,11 +74,11 @@ public class UserorderController {
         Roomtype room = roomtypeService.queryRoomtype(rid);
         Msg msg = new Msg();
         msg.setResult("false");
-//        HttpSession session = request.getSession();
-//        User user = (User) session.getAttribute("user");
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
         int rnum = ControllerUtils.setnum(num);
-        Long uid = 1541968756951871489L;
-//        Long uid = user.getUId();
+//        Long uid = 1541968756951871489L;
+        Long uid = user.getUId();
         if (room.getSurplusroomnum() > 1) {
             Userorder userorder = new Userorder();
             userorder.setRId(room.getRId());
@@ -100,10 +100,10 @@ public class UserorderController {
 
     @RequestMapping(value = "/queryallorderforsb", produces = "application/json;charset=utf-8")
     public String queryAllOrderForSb(HttpServletRequest request) {
-//        HttpSession session = request.getSession();
-//        User user1 = (User) session.getAttribute("user");
-//        Long uid = user1.getUId();
-        Long uid = 1541968756951871489L;
+        HttpSession session = request.getSession();
+        User user1 = (User) session.getAttribute("user");
+        Long uid = user1.getUId();
+//        Long uid = 1541968756951871489L;
         int user = userService.isUserExistByUid(uid);
         Msg msg = new Msg();
         msg.setResult("用户不存在！");
