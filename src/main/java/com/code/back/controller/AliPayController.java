@@ -79,7 +79,7 @@ public class AliPayController {
         httpResponse.getWriter().close();
     }
 
-    @PostMapping(value = "/notify",produces = "application/json;charset=utf-8")  // 注意这里必须是POST接口
+    @PostMapping(value = "/notify")  // 注意这里必须是POST接口
     public String payNotify(HttpServletRequest request) throws Exception {
         if (request.getParameter("trade_status").equals("TRADE_SUCCESS")) {
             System.out.println("=========支付宝异步回调========");

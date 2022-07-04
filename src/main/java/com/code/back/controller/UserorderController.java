@@ -1,6 +1,8 @@
 package com.code.back.controller;
 
 
+import cn.hutool.core.date.DateUtil;
+import com.alipay.api.internal.util.AlipaySignature;
 import com.code.back.Vo.UserorderVo;
 import com.code.back.config.AlipayConfig;
 import com.code.back.pojo.*;
@@ -15,7 +17,9 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -46,12 +50,19 @@ public class UserorderController {
     @Qualifier("RoomsumServiceImpl")
     private RoomsumService roomsumService;
 
-    @Resource
-    AlipayConfig aliPayConfig;
 
     @Autowired
     @Qualifier("ReviewServiceImpl")
     private ReviewService reviewService;
+
+    private static final String GATEWAY_URL = "https://openapi.alipaydev.com/gateway.do";
+    private static final String FORMAT = "JSON";
+    private static final String CHARSET = "UTF-8";
+    //签名方式
+    private static final String SIGN_TYPE = "RSA2";
+
+    @Resource
+    private AlipayConfig aliPayConfig;
 
     @RequestMapping("/t1")
     public String test(Long uid) {
@@ -185,6 +196,47 @@ public class UserorderController {
                 msg.setResult("false");
             }
         }
+        return jsonUtil.getJson(msg);
+    }
+
+    @PostMapping(value = "/notify")  // 注意这里必须是POST接口
+    public String payNotify(HttpServletRequest request) throws Exception {
+        if (request.getParameter("trade_status").equals("TRADE_SUCCESS")) {
+            System.out.println("=========支付宝异步回调========");
+
+            Map<String, String> params = new HashMap<>();
+            Map<String, String[]> requestParams = request.getParameterMap();
+            for (String name : requestParams.keySet()) {
+                params.put(name, request.getParameter(name));
+                // System.out.println(name + " = " + request.getParameter(name));
+            }
+
+            String tradeNo = params.get("out_trade_no");
+            String gmtPayment = params.get("gmt_payment");
+            String alipayTradeNo = params.get("trade_no");
+            String now = DateUtil.now();
+            Date payTime = DateUtil.parseDateTime(now);
+            String sign = params.get("sign");
+            String content = AlipaySignature.getSignCheckContentV1(params);
+            boolean checkSignature = AlipaySignature.rsa256CheckContent(content, sign, aliPayConfig.getAlipayPublicKey(), "UTF-8"); // 验证签名
+            // 支付宝验签
+            if (checkSignature) {
+                // 验签通过
+                System.out.println("交易名称: " + params.get("subject"));
+                System.out.println("交易状态: " + params.get("trade_status"));
+                System.out.println("支付宝交易凭证号: " + params.get("trade_no"));
+                System.out.println("商户订单号: " + params.get("out_trade_no"));
+                System.out.println("交易金额: " + params.get("total_amount"));
+                System.out.println("买家在支付宝唯一id: " + params.get("buyer_id"));
+                System.out.println("买家付款时间: " + params.get("gmt_payment"));
+                System.out.println("买家付款金额: " + params.get("buyer_pay_amount"));
+
+                // 更新订单未已支付
+                int i = userorderService.updateSuccessPay(tradeNo, payTime,alipayTradeNo);
+            }
+        }
+        Msg msg = new Msg();
+        msg.setResult("success");
         return jsonUtil.getJson(msg);
     }
 

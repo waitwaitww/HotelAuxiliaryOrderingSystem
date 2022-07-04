@@ -99,11 +99,11 @@ public class HotelController {
     }
 
     @RequestMapping(value = "/screenhotel", produces = "application/json;charset=utf-8")
-    public String screenHotel(@RequestParam(value = "star_rating" ,defaultValue = "3")String  star,
-                              @RequestParam(value = "rating_avg" ,defaultValue = "7") float rating,
-                              @RequestParam(value = "number_of_review" ,defaultValue ="50")int numreview,
+    public String screenHotel(@RequestParam(value = "star_rating" ,defaultValue = "4")String  star,
+                              @RequestParam(value = "rating_avg" ,defaultValue = "6") float rating,
+                              @RequestParam(value = "number_of_review" ,defaultValue ="0")int numreview,
                               @RequestParam(value = "rtname" ,defaultValue = "")String rtname,
-                              @RequestParam(value = "order_by", defaultValue = "avg_price")String orderBy,
+                              @RequestParam(value = "order_by", defaultValue = "price_avg")String orderBy,
                               HttpServletRequest request){
         Msg msg = new Msg();
         HttpSession session = request.getSession();

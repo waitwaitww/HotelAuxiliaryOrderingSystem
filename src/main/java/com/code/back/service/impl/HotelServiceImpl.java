@@ -108,11 +108,22 @@ public class HotelServiceImpl extends ServiceImpl<HotelMapper, Hotel> implements
 
     @Override
     public List<Hotel> screenHotel(String hname, float star, float rating, int numreview, String rtname, String orderBy) {
-        if (star > 3) {
-            return hotelMapper.screenHotel("%" + hname + "%", star, rating, numreview, rtname, orderBy);
+        if(orderBy.equals("distance")){
+                return hotelMapper.screenHotel3("%" + hname + "%", star, rating, numreview, rtname, orderBy);
+
+        }
+        else if(orderBy.equals("star_rating")){
+
+                return hotelMapper.screenHotel2("%" + hname + "%", star, rating, numreview, rtname, orderBy);
+
         }
         else {
-            return hotelMapper.screenHotel1("%" + hname + "%", star, rating, numreview, rtname, orderBy);
+            if (star > 3) {
+                return hotelMapper.screenHotel("%" + hname + "%", star, rating, numreview, rtname, orderBy);
+            }
+            else {
+                return hotelMapper.screenHotel1("%" + hname + "%", star, rating, numreview, rtname, orderBy);
+            }
         }
     }
 }

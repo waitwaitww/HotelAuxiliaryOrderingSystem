@@ -40,7 +40,7 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
     @Profile({"dev","test"})//设置dev开发、test测试 环境开启  保证我们的效率
     public PerformanceInterceptor performanceInterceptor(){
         PerformanceInterceptor performanceInterceptor = new PerformanceInterceptor();
-        performanceInterceptor.setMaxTime(100);//设置sql最大执行时间*ms，如果超过了则不执行
+        performanceInterceptor.setMaxTime(1000);//设置sql最大执行时间*ms，如果超过了则不执行
         performanceInterceptor.setFormat(true);//开启sql格式化
         return performanceInterceptor;
     }
