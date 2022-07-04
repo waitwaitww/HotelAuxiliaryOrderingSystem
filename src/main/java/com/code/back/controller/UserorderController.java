@@ -176,7 +176,7 @@ public class UserorderController {
         Userorder userorder = userorderService.quserOrederByOid(oid);
         if (userorder.getState() == 0) {
             int i = userorderService.deleteUserorderById(oid);
-            if (i == 0) {
+            if (i == 1) {
                 userorderService.deleteUserorderById(userorder.getOId());
                 roomtypeService.increaseRoomtypeByRid(userorder.getRId());
                 Roomtype roomtype = roomtypeService.queryRoomtype(userorder.getRId());

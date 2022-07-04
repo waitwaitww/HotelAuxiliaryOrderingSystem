@@ -62,7 +62,9 @@ public class RoomsumServiceImpl extends ServiceImpl<RoomsumMapper, Roomsum> impl
 
     @Override
     public int increaseRoomsum(Long roomsum_id) {
-        Roomsum roomsum = roomsumMapper.selectById(roomsum_id);
+        QueryWrapper<Roomsum> wrapper = new QueryWrapper<>();
+        wrapper.eq("h_id",roomsum_id);
+        Roomsum roomsum = roomsumMapper.selectOne(wrapper);
         roomsum.setRoomnum(roomsum.getRoomnum()+1);
         return roomsumMapper.updateById(roomsum);
     }

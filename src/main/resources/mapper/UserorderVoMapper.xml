@@ -28,18 +28,18 @@
         select o_id,rtname,rating,pay_time,state,total_price,Create_time,checkin_time,checkout_time,review,
         p1_tel,pname1,p2_tel,pname2,breakfast_time,hname,alipay_no
         from userorder uo, roomtype r,hotel h
-        where uo.u_id = #{uid} and uo.r_id=r.r_id and r.h_id = h.h_id
+        where uo.u_id = #{uid} and uo.r_id=r.r_id and r.h_id = h.h_id and uo.deleted = 0
     </select>
     <select id="queryAllStateOrderById" resultType="com.code.back.Vo.UserorderVo">
         select o_id,rtname,rating,pay_time,state,total_price,Create_time,checkin_time,checkout_time,review,
         p1_tel,pname1,p2_tel,pname2,breakfast_time,hname,alipay_no
         from userorder uo, roomtype r,hotel h
-        where uo.u_id = #{uid} and uo.r_id=r.r_id and r.h_id = h.h_id and state = #{state}
+        where uo.u_id = #{uid} and uo.r_id=r.r_id and r.h_id = h.h_id and state = #{state} and uo.deleted = 0
     </select>
     <select id="queryUserorderByOid" resultType="com.code.back.Vo.UserorderVo">
         select o_id,rtname,rating,pay_time,state,total_price,Create_time,checkin_time,checkout_time,review,
         p1_tel,pname1,p2_tel,pname2,breakfast_time,hname,alipay_no
         from userorder uo, roomtype r,hotel h
-        where uo.o_id = #{oid} and uo.r_id=r.r_id and r.h_id = h.h_id
+        where uo.o_id = #{oid} and uo.r_id=r.r_id and r.h_id = h.h_id and uo.deleted = 0
     </select>
 </mapper>
