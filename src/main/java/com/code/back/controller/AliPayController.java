@@ -142,7 +142,7 @@ public class AliPayController {
         // 2. 创建 Request，设置参数
         AlipayTradeRefundRequest request = new AlipayTradeRefundRequest();
         JSONObject bizContent = new JSONObject();
-        bizContent.set("trade_no", aliPay.getTraceNo());  // 支付宝回调的订单流水号
+        bizContent.set("trade_no", aliPay.getAlipayTraceNo());  // 支付宝回调的订单流水号
         bizContent.set("refund_amount", aliPay.getTotalAmount());  // 订单的总金额
         bizContent.set("out_request_no", aliPay.getTraceNo());   //  我的订单编号
 

@@ -52,6 +52,8 @@ public class UserorderVo {
 
     private String hname;
 
+    private String alipayNo;
+
     @TableField(exist = false)
     private Hotel hotel;
 

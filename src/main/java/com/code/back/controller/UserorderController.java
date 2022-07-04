@@ -170,7 +170,7 @@ public class UserorderController {
     }
 
     @RequestMapping(value = "/cancellationorder", produces = "application/json;charset=utf-8")
-    public String cancellationOrder(@RequestParam("o_id") String oid, AliPay aliPay) {
+    public String cancellationOrder(@RequestParam("o_id") String oid) {
         Msg msg = new Msg();
         msg.setResult("success");
         Userorder userorder = userorderService.quserOrederByOid(oid);
@@ -187,5 +187,6 @@ public class UserorderController {
         }
         return jsonUtil.getJson(msg);
     }
+
 }
 
