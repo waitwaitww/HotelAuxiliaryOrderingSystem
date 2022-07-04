@@ -153,5 +153,7 @@ public class HotelController {
         }
         return jsonUtil.getJson(msg);
     }
+
+    
 }
 
